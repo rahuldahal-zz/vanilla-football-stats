@@ -6,14 +6,27 @@ function handleFetchErrors(res) {
 export function fetchData(dataToBeFetched, id) {
 
     return new Promise((resolve, reject) => {
-        // let url = `http://api.football-data.org/v2/competitions/${id}/${dataToBeFetched}`;
-        let url = "./backupData/bundesligaStandings.json";
+
+        const Key = process.env.API_KEY;
+        let url;
+
+        if (!dataToBeFetched)
+            url = `http://api.football-data.org/v2/competitions/${id}`;
+        // url = "./backupData/bundesliga.json"
+
+        if (dataToBeFetched === "standings") {
+            url = `http://api.football-data.org/v2/competitions/${id}/${dataToBeFetched}`;
+            // let url = "./backupData/bundesligaStandings.json";
+        }
 
         if (dataToBeFetched === "teams")
-            url = `./backupData/bundesligaTeams.json`;
+            url = `http://api.football-data.org/v2/competitions/${id}/teams`;
+        // url = `./backupData/bundesligaTeams.json`;
+
         if (dataToBeFetched === "particularTeam")
-            // url = `http://api.football-data.org/v2/teams/${id}`;
-            url = "./backupData/athletiMadrid.json";
+            url = `http://api.football-data.org/v2/teams/${id}`;
+        // url = "./backupData/athletiMadrid.json";
+
         if (dataToBeFetched === "matches")
             url = `http://api.football-data.org/v2/teams/${id}/matches/`;
 
@@ -23,7 +36,7 @@ export function fetchData(dataToBeFetched, id) {
             url,
             {
                 headers: {
-                    "X-Auth-Token": "81e1d8497a114fccac5688e87f6741a0"
+                    "X-Auth-Token": Key
                 }
             }
         )

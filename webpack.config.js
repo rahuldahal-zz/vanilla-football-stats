@@ -7,6 +7,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const fse = require("fs-extra");
+const Dotenv = require("dotenv-webpack");
 
 let pages = fse.readdirSync("./src").filter(file => {
     return file.endsWith(".html");
@@ -68,6 +69,7 @@ if (currentTask === "dev") {
         port: 3000,
         host: "0.0.0.0"
     };
+    config.plugins.push(new Dotenv());
 }
 
 //separate for "production"

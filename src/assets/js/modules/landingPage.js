@@ -1,3 +1,4 @@
+import PreLoader from "./preloader";
 import Standings from "./standingsHandler";
 import Navigation from "./navigation";
 
@@ -11,9 +12,12 @@ export default class LandingPage {
 
     handleButtons() {
         this.leagues.forEach((league) => {
-            this.leagueId = league.dataset.league;
-            league.addEventListener("click", () => {
+            league.addEventListener("click", e => {
 
+                // show loader
+                PreLoader.prototype.showLoader();
+
+                this.leagueId = e.currentTarget.dataset.league;
                 //change the "selected-league" text on the top-left of the screen
                 document.querySelector("#selected>span").textContent =
                     league.dataset.leagueName;
@@ -22,12 +26,13 @@ export default class LandingPage {
                 document.querySelector("header").style.display = "flex";
                 document.querySelector("nav").style.display = "flex";
 
-                //start to fetch things
-                new Standings(this.leagueId);
-                new Navigation(this.leagueId);
-
                 //hide the "landingContent" and show the standings
                 landingContent.style.display = "none";
+
+                //start to fetch things
+                new Navigation(this.leagueId);
+                new Standings(this.leagueId);
+
             });
         });
     }

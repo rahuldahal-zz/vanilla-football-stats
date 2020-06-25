@@ -1,6 +1,5 @@
 import { fetchData } from "./fetchData";
 
-
 export default class TeamInfo {
     constructor(teamId) {
         this.teamInfoCard = document.getElementById("teamInfoCard");
@@ -14,7 +13,6 @@ export default class TeamInfo {
         this.lastAwayGoal = document.getElementById("lastAwayGoal");
         this.nextHomeName = document.getElementById("nextHomeName");
         this.nextAwayName = document.getElementById("nextAwayName");
-        this.matchesPlayed = [];
 
         this.collapseTeamInfo = document.getElementById("collapse");
 
@@ -33,12 +31,6 @@ export default class TeamInfo {
 
         this.teamInfoCard.classList.add("teamInfo_active");
 
-        //fetch matches played for calculating current form
-
-        // fetchData("matches", teamId)
-        //     .then((data) => this.currentForm(teamId, data, played));
-
-
         //populate the template with data
         this.logoWrapper = document.getElementById("logoWrapper"),
             this.clubName = document.getElementById("clubName"),
@@ -53,6 +45,11 @@ export default class TeamInfo {
             this.players = document.querySelectorAll(".players"),
             this.date = new Date().getFullYear();
 
+
+        //fetch matches played for calculating current form
+
+        fetchData("matches", teamId)
+            .then((data) => this.currentForm(teamId, data));
 
 
         fetchData("particularTeam", teamId)
@@ -88,15 +85,6 @@ export default class TeamInfo {
                     this.activeCompetitions.appendChild(competition);
                 }
 
-                //matches played
-                // understand this...
-                for (let i = 0; i < this.matchesPlayed.length; i++) {
-                    let team = this.matchesPlayed[i];
-                    if (team[0] == teamId) {
-                        this.played = team[1];
-                        break;
-                    }
-                }
 
                 //squads
 
@@ -149,29 +137,37 @@ export default class TeamInfo {
         });
     }
 
-    currentForm(teamId, data, matchesPlayedCount) {
-        let matchesArray = data.matches;
-        console.log(matchesArray + "->>>");
+    currentForm(teamId, data) {
+
+        let localStorageKey = `${data.matches[0].competition.id} ${data.matches[0].season.startDate}`;
+        let shortNames = JSON.parse(localStorage.getItem(localStorageKey));
+
+        console.log(shortNames);
+
+        let playedMatchesCount = 0;
+
+        for (let i = 0; i < data.matches.length; i++) {
+            if (data.matches[i].status === "FINISHED")
+                playedMatchesCount++;
+            else break;
+        }
         let previousMatch, lastMatch, nextMatch;
 
-        //get the league matchday whose value  = matchesPlayedCount
+        //get the league matchday whose value  = played
 
-        for (let i = 0; i < matchesArray.length; i++) {
-            let count = 0;
-            if (matchesArray[i].matchday == matchesPlayedCount - 1) {
-                previousMatch = matchesArray[i];
-                count++;
-            }
-            if (matchesArray[i].matchday == matchesPlayedCount) {
-                lastMatch = matchesArray[i];
-                count++;
-            }
-            if (matchesArray[i].matchday == matchesPlayedCount + 1) {
-                nextMatch = matchesArray[i];
-                count++;
-            }
-            if (count === 3) break;
-        }
+        // previousMatch = currentMatchDay - 1
+        // lastMatch = currentMatchDay
+        // nextMatch = currentMatchDay + 1
+
+        previousMatch = data.matches[playedMatchesCount - 2];
+
+        lastMatch = data.matches[playedMatchesCount - 1];
+
+        nextMatch = data.matches[playedMatchesCount];
+
+
+
+
 
         let away = [
             previousMatch.awayTeam,
@@ -188,6 +184,9 @@ export default class TeamInfo {
         let scores = [previousMatch.score, lastMatch.score];
         let wonBy = [scores[0].winner, scores[1].winner];
 
+
+        // setting "teamNames" based on "id" stored in "local storage"
+
         for (let i = 0; i < shortNames.length; i++) {
             // console.log(shortNames[i][0]);
             if (away[0].id == shortNames[i][0]) awayTeamNames[0] = shortNames[i][1];
@@ -197,7 +196,8 @@ export default class TeamInfo {
             if (home[1].id == shortNames[i][0]) homeTeamNames[1] = shortNames[i][1];
             if (home[2].id == shortNames[i][0]) homeTeamNames[2] = shortNames[i][1];
         }
-        console.log(aName, homeTeamNames);
+
+        console.log(awayTeamNames, homeTeamNames);
 
         //[0] = previousMatch [1] = lastMatch
 
@@ -225,16 +225,7 @@ export default class TeamInfo {
 
         //checked
 
-        console.log(result);
-
         //append to the DOM
-
-        /*
-     
-      previousHomeName = previous home name
-      previousHomeGoal = previous home goal, etc
-     
-      */
 
 
 
@@ -267,7 +258,7 @@ export default class TeamInfo {
         this.nextHomeName.textContent = homeTeamNames[2];
         this.nextAwayName.textContent = awayTeamNames[2];
 
-        console.log(matchesArray);
+        console.log(data.matches);
     }
 
 }

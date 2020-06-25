@@ -49,6 +49,7 @@
     background-color: #fff;
     background-size: cover;
     border-radius: 50%;
+    filter: drop-shadow(0 5px 10px  rgba(0, 0, 0, .4));
   }
 
   h4 {
@@ -127,6 +128,10 @@
         padding: 10px;
         background-color: #eee;
         border-left: 2px solid $brand;
+
+        @include for_600{
+          padding: 0;
+        }
 
         em,
         p {
@@ -219,6 +224,11 @@
       address,
       a {
         margin: 10px;
+
+        @include for_600{
+          margin: 0;
+          margin-bottom: 10px;
+        }
       }
       a {
         display: block;

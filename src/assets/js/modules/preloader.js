@@ -14,9 +14,11 @@ export default class PreLoader {
 
     showLoader() {
         loader.classList.add("loaderActive");
+        console.log("showing loader");
     }
 
     hideLoader() {
         loader.classList.remove("loaderActive");
+        console.log("hiding loader");
     }
 }

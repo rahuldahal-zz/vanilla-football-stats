@@ -1,3 +1,4 @@
+import PreLoader from "./preloader";
 import TeamInfo from "./teamInfo";
 import { fetchData } from "./fetchData";
 
@@ -28,6 +29,7 @@ export default class Teams {
     // data.count is available on that data, via football-data.org
 
     populateTeams() {
+        PreLoader.prototype.hideLoader();
         console.log(this.data.teams);
         this.data.teams.forEach((theTeam) => {
             //creating the "team" cards

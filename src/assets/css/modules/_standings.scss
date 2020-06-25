@@ -1,9 +1,11 @@
 #standingsOutput {
     max-width: 1366px;
-    margin: 15vh 0;
+    margin: 15vh auto;
     display: none;
     width: 75vw;
     padding: 0 20px;
+    flex-direction: column-reverse;
+    filter: drop-shadow(5px -5px 20px rgba(0, 0, 0, .5));
   
     @include for_768 {
       padding: 0 5px;
@@ -12,13 +14,12 @@
     table {
       // border: 1px solid black;
       border-collapse: collapse;
-      margin: auto;
-      width: 100%;
-  
-      @include for_600 {
+
+      @include for_768{
         width: 100%;
       }
     }
+    
   
     th,
     td {
@@ -35,11 +36,12 @@
       @include for_600 {
         padding: 4px;
         font-weight: 400;
+        max-width: 80px;
       }
     }
     th {
       @include for_768 {
-        padding: 10px 4;
+        padding: 10px 4px;
       }
     }
   
@@ -51,6 +53,7 @@
         display: block;
         font-size: 0.7rem;
         text-align: center;
+        overflow-x: scroll;
       }
     }
   
@@ -77,6 +80,41 @@
     tr:nth-child(odd) {
       background-color: #eee;
       color: #333;
+    }
+
+
+    #standingsOutput__filter{
+
+      #filterButtonsWrap{
+        display: flex;
+        width: max-content;
+
+        @include for_768{
+          width: 100%;
+        }
+
+        button{
+          cursor: pointer;
+          border-right: 2px solid #ccc;
+          transition: background-color 0.2s ease;
+
+          @include for_768{
+            padding: 0.5rem 0.75rem;
+          }
+
+          &:hover, &:focus{
+            background-color: $accent;
+          }
+
+          &:last-child{
+            border-right: 0;
+            border-top-right-radius: 0.5rem;
+          }
+        }
+      }
+    }
+    .activeFilter{
+      background-color: $accent;
     }
   }
   

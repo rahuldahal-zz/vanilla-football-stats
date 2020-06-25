@@ -18,24 +18,25 @@ export default class Navigation {
     events() {
         this.navigationButtons.forEach((stat) => {
             stat.addEventListener("click", (e) => {
-                this.statValue = e.target.getAttribute("id");
-                console.log(this.statValue);
-                for (let i = 0; i < this.navigationButtons.length; i++) {
-                    if (this.navigationButtons[i].classList.contains("active")) {
-                        this.navigationButtons[i].classList.remove("active");
-                        break;
-                    }
+                if (!stat.classList.contains("active")) {
+
+                    PreLoader.prototype.showLoader();
+
+                    this.statValue = e.target.getAttribute("id");
+                    console.log(this.statValue);
+
+                    // remove the "active" class
+                    this.navigationButtons.forEach(btn => {
+                        btn.classList.remove("active");
+                    })
+
+                    // add the "active" class to targeted element
+                    e.target.classList.add("active");
+
+                    if (this.statValue === "standings") new Standings(this.leagueId);
+                    else if (this.statValue === "scorers") scorers(data);
+                    else if (this.statValue === "teams") new Teams(this.leagueId);
                 }
-
-                e.target.classList.add("active");
-
-                PreLoader.prototype.showLoader();
-
-                if (this.statValue === "standings") new Standings(this.leagueId);
-                else if (this.statValue === "scorers") scorers(data);
-                else if (this.statValue === "teams") new Teams(this.leagueId);
-
-                PreLoader.prototype.hideLoader();
             });
         });
 
@@ -46,42 +47,50 @@ export default class Navigation {
 
         //dropdownLeagues dropdown handler
         this.dropdownLeagues.forEach((league) => {
-            league.addEventListener("click", () => {
+            let selectedLeague = document.querySelector("#selected>span");
+            league.addEventListener("click", e => {
 
-                //collapse the leagueDropdown
+                // execute only when the selected "league" is different from "current" league
 
-                leagueDropdown.classList.remove("scaleY1");
-                document.querySelector("#selected>span").textContent =
-                    league.textContent;
+                if (selectedLeague.textContent != e.currentTarget.textContent) {
 
-                //ends
+                    PreLoader.prototype.showLoader();
 
-                selected.style.transform = "translateY(-80px)";
+                    //collapse the leagueDropdown
 
-                //remove/set active class
+                    leagueDropdown.classList.remove("scaleY1");
+                    selectedLeague.textContent = e.currentTarget.textContent;
 
-                for (let i = 0; i < this.navigationButtons.length; i++) {
-                    if (this.navigationButtons[i].classList.contains("active")) {
-                        this.navigationButtons[i].classList.remove("active");
-                        break;
+                    //ends
+
+                    selected.style.transform = "translateY(-80px)";
+
+                    //remove/set active class
+
+                    for (let i = 0; i < this.navigationButtons.length; i++) {
+                        if (this.navigationButtons[i].classList.contains("active")) {
+                            this.navigationButtons[i].classList.remove("active");
+                            break;
+                        }
                     }
+
+                    //to highlight "standings" initially on every selection
+                    this.navigationButtons[2].classList.add("active");
+
+
+                    this.leagueId = league.dataset.league;
+                    teamsOutput.innerHTML = "";
+
+                    //fetch standings
+                    new Standings(this.leagueId);
+
                 }
-
-                //to highlight "standings" initially on every selection
-                this.navigationButtons[2].classList.add("active");
-
-
-                this.leagueId = league.dataset.league;
-                teamsOutput.innerHTML = "";
-
-                //fetch standings
-                new Standings(this.leagueId);
-
             });
         });
 
 
     }
+
 
 
     toggleDropDown() {
