@@ -1,0 +1,33 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+button {
+  border: 0;
+  outline: 0;
+  padding: 15px 20px;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(rgba(0, 102, 153, 0.6), rgba(0, 102, 153, 0.8)),
+    url("/assets/images/background.webp") no-repeat;
+  background-size: cover;
+  font-family: "Proza Libre", "serif";
+  background-attachment: fixed !important;
+
+  @include for_768 {
+    background: linear-gradient(rgba(0, 102, 153, 0.6), rgba(0, 102, 153, 0.8)),
+      url("/assets/images/background_mobile.webp") no-repeat;
+  }
+}
+
+//main styles from here...
+
+//landing page
+
+
