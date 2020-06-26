@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --open",
-    "build": "node ./src/assets/js/createEnv webpack"
+    "build": "node ./src/assets/js/createEnv.js webpack"
   },
   "keywords": [],
   "author": "",
