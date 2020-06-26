@@ -11,24 +11,24 @@ export function fetchData(dataToBeFetched, id) {
         let url;
 
         if (!dataToBeFetched)
-            url = `http://api.football-data.org/v2/competitions/${id}`;
+            url = `https://api.football-data.org/v2/competitions/${id}`;
         // url = "./backupData/bundesliga.json"
 
         if (dataToBeFetched === "standings") {
-            url = `http://api.football-data.org/v2/competitions/${id}/${dataToBeFetched}`;
+            url = `https://api.football-data.org/v2/competitions/${id}/${dataToBeFetched}`;
             // let url = "./backupData/bundesligaStandings.json";
         }
 
         if (dataToBeFetched === "teams")
-            url = `http://api.football-data.org/v2/competitions/${id}/teams`;
+            url = `https://api.football-data.org/v2/competitions/${id}/teams`;
         // url = `./backupData/bundesligaTeams.json`;
 
         if (dataToBeFetched === "particularTeam")
-            url = `http://api.football-data.org/v2/teams/${id}`;
+            url = `https://api.football-data.org/v2/teams/${id}`;
         // url = "./backupData/athletiMadrid.json";
 
         if (dataToBeFetched === "matches")
-            url = `http://api.football-data.org/v2/teams/${id}/matches/`;
+            url = `https://api.football-data.org/v2/teams/${id}/matches/`;
 
         console.log(url);
 
