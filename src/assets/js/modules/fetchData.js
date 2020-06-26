@@ -37,18 +37,13 @@ export function fetchData(dataToBeFetched, id) {
             {
                 method: "GET",
                 headers: {
-                    "X-Auth-Token": process.env.API_KEY,
+                    "Access-Control-Allow-Methods": "GET",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Headers": "x-auth-token, x-response-control",
+                    "Content-Length": 0,
+                    "Content-Type": "text/plain",
 
-                    "Access-Control-Allow-Credentials": "true",
-
-                    "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization, Access-Control-Allow-Origin",
-
-                    "Access-Control-Request-Headers": "Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization, Access-Control-Allow-Origin",
-
-                    "Access-Control-Allow-Methods": "PUT, GET, POST, OPTIONS",
-
-
-                    "Access-Control-Allow-Origin": "*"
+                    "X-Auth-Token": process.env.API_KEY
 
                 }
             }
