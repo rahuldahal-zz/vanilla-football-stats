@@ -7,7 +7,7 @@ export function fetchData(dataToBeFetched, id) {
 
     return new Promise((resolve, reject) => {
 
-        const Key = process.env.API_KEY;
+
         let url;
 
         if (!dataToBeFetched)
@@ -35,8 +35,9 @@ export function fetchData(dataToBeFetched, id) {
         fetch(
             url,
             {
+                method: "GET",
                 headers: {
-                    "X-Auth-Token": Key,
+                    "X-Auth-Token": process.env.API_KEY,
 
                     "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization, Access-Control-Allow-Origin",
 
