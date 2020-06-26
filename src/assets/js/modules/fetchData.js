@@ -37,7 +37,9 @@ export function fetchData(dataToBeFetched, id) {
             {
                 headers: {
                     "X-Auth-Token": Key,
-                    "Access-Control-Allow-Origin": "*"
+                    "Access-Control-Allow-Methods": "PUT, GET, POST",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization"
                 }
             }
         )
