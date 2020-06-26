@@ -36,7 +36,7 @@ export function fetchData(dataToBeFetched, id) {
             url,
             {
                 headers: {
-                    "X-Auth-Token": Key
+                    "X-Auth-Token": Key,
                     "Access-Control-Allow-Origin": "*"
                 }
             }
