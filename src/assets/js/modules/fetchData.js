@@ -43,7 +43,8 @@ export function fetchData(dataToBeFetched, id) {
                     "Content-Length": 0,
                     "Content-Type": "text/plain",
 
-                    "X-Auth-Token": process.env.API_KEY
+                    // "X-Auth-Token": process.env.API_KEY
+                    "X-Auth-Token": "81e1d8497a114fccac5688e87f6741a0"
 
                 }
             }
