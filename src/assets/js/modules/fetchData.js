@@ -32,22 +32,23 @@ export function fetchData(dataToBeFetched, id) {
 
         console.log(url);
 
+        let myHeaders = new Headers({
+            "Access-Control-Allow-Methods": "GET",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "x-auth-token, x-response-control,access-control-allow-origin, access-control-allow-headers",
+            "Content-Length": 0,
+            "Content-Type": "text/plain",
+
+
+            // "X-Auth-Token": process.env.API_KEY
+            "X-Auth-Token": "81e1d8497a114fccac5688e87f6741a0"
+
+        });
         fetch(
             url,
             {
                 method: "GET",
-                headers: {
-                    "Access-Control-Allow-Methods": "GET",
-                    "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Headers": "x-auth-token, x-response-control,access-control-allow-origin, access-control-allow-headers",
-                    "Content-Length": 0,
-                    "Content-Type": "text/plain",
-
-
-                    // "X-Auth-Token": process.env.API_KEY
-                    "X-Auth-Token": "81e1d8497a114fccac5688e87f6741a0"
-
-                }
+                headers: myHeaders
             }
         )
             .then((response) => response.json())
