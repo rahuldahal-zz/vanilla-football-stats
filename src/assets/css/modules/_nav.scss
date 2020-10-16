@@ -1,129 +1,128 @@
 header {
-    background-color: #333;
-    height: 7vh;
-    display: none;
-    justify-content: space-between;
-    width: 100vw;
-    position: fixed;
-    z-index: 2;
-    top: 0;
-    box-shadow: 0 9px 18px -10px rgba(0, 0, 0, 0.4);
-  
-    #selectWrapper {
-      width: 200px;
-  
-      @include for_768 {
-        width: 160px;
-      }
-  
-      #selected {
-        position: relative;
-        z-index: 2;
-        height: 9vh;
-        background-color: #00ff85;
-        text-align: center;
-        padding-top: 20px;
-        cursor: pointer;
-        transform: translateY(-80px);
-        transition: transform 0.5s 0.5s cubic-bezier(0.75, -0.5, 0, 1.75);
-        border-bottom-right-radius: 1rem;
-        box-shadow: 0 9px 18px -10px rgba(0, 0, 0, 0.4);
-  
-        i {
-          transition: transform 0.2s cubic-bezier(0.75, -0.5, 0, 1.75);
-        }
-  
-        &:hover i {
-          transform: scale(1.5);
-        }
-      }
-  
-      #leagueDropdown {
-        margin-top: -20px;
-        transform: scaleY(0);
-        transform-origin: top;
-        transition: transform 0.3s ease-out;
-        padding-top: 20px;
-        background-color: #fff;
-        box-shadow: 0 9px 18px -10px rgba(0, 0, 0, 0.4);
-        .league {
-          display: block;
-          padding: 15px 20px;
-          background-color: #fff;
-          width: 100%;
-          padding-bottom: 5px;
-          border-bottom: 1px solid #333;
-  
-          &:hover {
-            background-color: #333;
-            color: #fff;
-          }
-        }
-      }
-    }
-  
-    #author {
-      color: #eee;
-      margin-top: 2vh;
-      margin-right: 30px;
-      font-size: 0.8rem;
-  
-      @include for_768 {
-        margin-right: 20px;
-      }
-  
-      a {
-        color: #eee;
-      }
-    }
-  }
-  
-  .scaleY1 {
-    transform: scaleY(1) !important;
-  }
-  
-  #navigation {
-    position: fixed;
-    z-index: 2;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 7vh;
-    display: none;
-    justify-content: space-between;
-  
+  background-color: #333;
+  height: 7vh;
+  display: none;
+  justify-content: space-between;
+  width: 100vw;
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  box-shadow: 0 9px 18px -10px rgba(0, 0, 0, 0.4);
+
+  #selectWrapper {
+    width: 200px;
+
     @include for_768 {
-      position: fixed;
-      top: 93vh;
-      left: 0;
-      transform: translateX(0);
-      width: 100%;
-      justify-content: space-around;
-      background-color: #333;
+      width: 160px;
     }
-  
-    button {
-      color: #fff;
-      transition: background-color 0.2s ease-in-out;
-      background-color: #333;
-      width: 100%;
-      border-right: 2px solid #666;
-  
-      &:last-child {
-        border-right: none;
+
+    #selected {
+      position: relative;
+      z-index: 2;
+      height: 9vh;
+      background-color: #00ff85;
+      text-align: center;
+      padding-top: 20px;
+      cursor: pointer;
+      transform: translateY(-80px);
+      transition: transform 0.5s 0.5s cubic-bezier(0.75, -0.5, 0, 1.75);
+      border-bottom-right-radius: 1rem;
+      box-shadow: 0 9px 18px -10px rgba(0, 0, 0, 0.4);
+
+      i {
+        transition: transform 0.2s cubic-bezier(0.75, -0.5, 0, 1.75);
       }
-  
-      &:hover {
-        background-color: #eee;
-        color: #333;
+
+      &:hover i {
+        transform: scale(1.5);
       }
     }
-  
-    .active {
+
+    #dropdownLeagueContainer {
+      margin-top: -20px;
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.3s ease-out;
+      padding-top: 20px;
       background-color: #fff;
-      padding-top: 12px;
-      border-top: 4px solid #00ff85;
+      box-shadow: 0 9px 18px -10px rgba(0, 0, 0, 0.4);
+      .league {
+        display: block;
+        padding: 15px 20px;
+        background-color: #fff;
+        width: 100%;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #333;
+
+        &:hover {
+          background-color: #333;
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  #author {
+    color: #eee;
+    margin-top: 2vh;
+    margin-right: 30px;
+    font-size: 0.8rem;
+
+    @include for_768 {
+      margin-right: 20px;
+    }
+
+    a {
+      color: #eee;
+    }
+  }
+}
+
+.scaleY1 {
+  transform: scaleY(1) !important;
+}
+
+#navigation {
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 7vh;
+  display: none;
+  justify-content: space-between;
+
+  @include for_768 {
+    position: fixed;
+    top: 93vh;
+    left: 0;
+    transform: translateX(0);
+    width: 100%;
+    justify-content: space-around;
+    background-color: #333;
+  }
+
+  button {
+    color: #fff;
+    transition: background-color 0.2s ease-in-out;
+    background-color: #333;
+    width: 100%;
+    border-right: 2px solid #666;
+
+    &:last-child {
+      border-right: none;
+    }
+
+    &:hover {
+      background-color: #eee;
       color: #333;
     }
   }
-  
+
+  .active {
+    background-color: #fff;
+    padding-top: 12px;
+    border-top: 4px solid #00ff85;
+    color: #333;
+  }
+}

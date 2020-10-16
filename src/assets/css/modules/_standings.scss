@@ -1,120 +1,127 @@
 #standingsOutput {
-    max-width: 1366px;
-    margin: 15vh auto;
-    display: none;
-    width: 75vw;
-    padding: 0 20px;
-    flex-direction: column-reverse;
-    filter: drop-shadow(5px -5px 20px rgba(0, 0, 0, .5));
-  
+  max-width: 1366px;
+  margin: 15vh auto;
+  display: none;
+  width: 75vw;
+  padding: 0 20px;
+  flex-direction: column-reverse;
+  filter: drop-shadow(5px -5px 20px rgba(0, 0, 0, 0.5));
+
+  @include for_768 {
+    padding: 0 5px;
+    width: 100vw;
+  }
+  table {
+    // border: 1px solid black;
+    border-collapse: collapse;
+
     @include for_768 {
-      padding: 0 5px;
-      width: 100vw;
-    }
-    table {
-      // border: 1px solid black;
-      border-collapse: collapse;
-
-      @include for_768{
-        width: 100%;
-      }
-    }
-    
-  
-    th,
-    td {
-      padding: 10px 15px;
-  
-      @include for_1024 {
-        padding: 5px 10px;
-        font-size: 1rem;
-      }
-      @include for_768 {
-        padding: 3px 6px;
-        font-size: 0.9rem;
-      }
-      @include for_600 {
-        padding: 4px;
-        font-weight: 400;
-        max-width: 80px;
-      }
-    }
-    th {
-      @include for_768 {
-        padding: 10px 4px;
-      }
-    }
-  
-    .teamName {
-      width: max-content;
-  
-      @include for_600 {
-        width: 100%;
-        display: block;
-        font-size: 0.7rem;
-        text-align: center;
-        overflow-x: scroll;
-      }
-    }
-  
-    .points {
-      font-weight: 600;
-    }
-  
-    td > img {
-      height: 20px;
-      max-width: 20px;
-      display: inline-block;
-      margin-right: 10px;
-  
-      @include for_600 {
-        display: block;
-        margin: auto;
-      }
-    }
-  
-    tr:nth-child(even) {
-      background-color: #fff;
-      color: #333;
-    }
-    tr:nth-child(odd) {
-      background-color: #eee;
-      color: #333;
-    }
-
-
-    #standingsOutput__filter{
-
-      #filterButtonsWrap{
-        display: flex;
-        width: max-content;
-
-        @include for_768{
-          width: 100%;
-        }
-
-        button{
-          cursor: pointer;
-          border-right: 2px solid #ccc;
-          transition: background-color 0.2s ease;
-
-          @include for_768{
-            padding: 0.5rem 0.75rem;
-          }
-
-          &:hover, &:focus{
-            background-color: $accent;
-          }
-
-          &:last-child{
-            border-right: 0;
-            border-top-right-radius: 0.5rem;
-          }
-        }
-      }
-    }
-    .activeFilter{
-      background-color: $accent;
+      width: 100%;
     }
   }
-  
+
+  th,
+  td {
+    padding: 10px 15px;
+
+    @include for_1024 {
+      padding: 5px 10px;
+      font-size: 1rem;
+    }
+    @include for_768 {
+      padding: 3px 6px;
+      font-size: 0.9rem;
+    }
+    @include for_600 {
+      padding: 4px;
+      font-weight: 400;
+      max-width: 80px;
+    }
+  }
+  th {
+    @include for_768 {
+      padding: 10px 4px;
+    }
+  }
+
+  .teamName {
+    width: max-content;
+
+    @include for_600 {
+      width: 100%;
+      display: block;
+      font-size: 0.7rem;
+      text-align: center;
+      overflow-x: scroll;
+    }
+  }
+
+  .points {
+    font-weight: 600;
+  }
+
+  td > img {
+    height: 20px;
+    max-width: 20px;
+    display: inline-block;
+    margin-right: 10px;
+
+    @include for_600 {
+      display: block;
+      margin: auto;
+    }
+  }
+
+  tr:nth-child(even) {
+    background-color: #fff;
+    color: #333;
+
+    td:nth-child(10) {
+      background-color: #00ff85;
+      text-align: center;
+    }
+  }
+  tr:nth-child(odd) {
+    background-color: #eee;
+    color: #333;
+
+    td:nth-child(10) {
+      background-color: #1ab66b;
+      text-align: center;
+    }
+  }
+
+  #standingsOutput__filter {
+    #filterButtonsWrap {
+      display: flex;
+      width: max-content;
+
+      @include for_768 {
+        width: 100%;
+      }
+
+      button {
+        cursor: pointer;
+        border-right: 2px solid #ccc;
+        transition: background-color 0.2s ease;
+
+        @include for_768 {
+          padding: 0.5rem 0.75rem;
+        }
+
+        &:hover,
+        &:focus {
+          background-color: $accent;
+        }
+
+        &:last-child {
+          border-right: 0;
+          border-top-right-radius: 0.5rem;
+        }
+      }
+    }
+  }
+  .activeFilter {
+    background-color: $accent;
+  }
+}
