@@ -29,8 +29,8 @@ export function fetchData(dataToBeFetched, leagueId) {
 
     if (dataToBeFetched === "matches") {
       console.log("No backup data found for matches...");
+      url = `https://api.football-data.org/v2/teams/${leagueId}/matches/`;
     }
-    url = `https://api.football-data.org/v2/teams/${leagueId}/matches/`;
 
     let myHeaders = new Headers({
       "X-Auth-Token": "81e1d8497a114fccac5688e87f6741a0",
