@@ -2,22 +2,20 @@ import PreLoader from "./preloader";
 import { fetchData } from "./fetchData";
 import LocalStorage from "./localStorage";
 import TeamInfo from "./teamInfo";
+import FlashMessage from "./flashMessage";
+const flash = new FlashMessage();
 
 export default class Standings {
   constructor(leagueId) {
     this.standingsOutput = document.getElementById("standingsOutput");
     this.teamsOutput = document.getElementById("teamsOutput");
     this.domTable = document.querySelector("#standingsOutput>table");
-    this.filterStandingsBtn = document.querySelectorAll(
-      "#filterButtonsWrap button"
-    );
+
     this.matchesPlayed = [];
     this.leagueId = leagueId || 2002; // change this...
-    console.log("standings: ", leagueId);
 
     this.windowWidth = window.innerWidth;
     this.shortenTableHeadingForSmallScreens();
-    this.init();
   }
 
   // check if "shortNames" with current "season" is on LocalStorage
@@ -35,6 +33,10 @@ export default class Standings {
         this.shortNames = response;
         console.log("Short names: ", this.shortNames);
         this.fetchStandings();
+      })
+      .catch((err) => {
+        console.error(err);
+        flash.error("there was an error while fetching the resource.");
       });
   }
 
@@ -47,40 +49,24 @@ export default class Standings {
           "The data in fetch standings: ",
           this.data.competition.name
         );
+
+        localStorage.setItem("standings", JSON.stringify(this.data));
+
         this.populateStandings();
-        this.filterStandings();
         PreLoader.prototype.hideLoader();
         selected.style.transform = "translateY(0)";
       })
-      .catch((error) => {
-        PreLoader.prototype.hideLoader();
-        this.standingsOutput.textContent = error;
+      .catch((err) => {
+        console.error(err);
+        flash.error("there was an error while fetching the resource.");
       });
-  }
-
-  // filter standings
-  filterStandings() {
-    console.log("on filter standings: ", this.data.competition.name);
-
-    this.filterStandingsBtn.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        if (!btn.classList.contains("activeFilter")) {
-          console.log("Data in filter: ", this.data.competition.name);
-
-          this.filterStandingsBtn.forEach((btn) =>
-            btn.classList.remove("activeFilter")
-          );
-          btn.classList.add("activeFilter");
-
-          this.populateStandings(btn.dataset.tableType);
-        }
-      });
-    });
   }
 
   populateStandings(type) {
-    console.log("The standings data: ", this.data.competition.name);
+    this.data = this.data || JSON.parse(localStorage.getItem("standings"));
+    console.log("on populate standings data: ", this.data.competition.name);
     console.log("By type: ", type);
+
     // hide teams, show standings
     this.teamsOutput.style.display = "none";
     this.standingsOutput.style.display = "flex";
@@ -108,6 +94,11 @@ export default class Standings {
 
     // start populating the content
 
+    const { competition, season } = this.data;
+    this.shortNames =
+      this.shortNames ||
+      JSON.parse(localStorage.getItem(`${competition.id} ${season.startDate}`));
+
     for (let standing of table) {
       // getting team id and matches played
       let team = [standing.team.id, standing.playedGames];
@@ -128,7 +119,9 @@ export default class Standings {
 
                     <td class="showTeamInfo" data-id="${
                       standing.team.id
-                    }"><img src="" class="clubLogo"><span  class="teamName">${teamName}</span></td>
+                    }"><img src="${
+        standing.team.crestUrl
+      }" class="clubLogo"><span  class="teamName">${teamName}</span></td>
 
                     <td style="text-align: center;">${standing.playedGames}</td>
                     <td style="text-align: center;">${standing.won}</td>
