@@ -8,6 +8,9 @@ export default class Navigation {
     this.dropdownLeagueContainer = document.getElementById(
       "dropdownLeagueContainer"
     );
+    this.filterStandingsBtn = document.querySelectorAll(
+      "#filterButtonsWrap button"
+    );
     this.dropdownLeagues = document.querySelectorAll(".league");
     this.selected = document.getElementById("selected");
     this.leagueId = leagueId;
@@ -15,7 +18,7 @@ export default class Navigation {
     this.events();
   }
 
-  //select for "standings" || "teams" || "scorers"
+  // select for "standings" || "teams" || "scorers"
 
   events() {
     this.navigationButtons.forEach((stat) => {
@@ -36,7 +39,8 @@ export default class Navigation {
           // add the "active" class to targeted element
           e.target.classList.add("active");
 
-          if (this.statValue === "standings") new Standings(this.leagueId);
+          if (this.statValue === "standings")
+            new Standings(this.leagueId).init();
           else if (this.statValue === "scorers") scorers(data);
           else if (this.statValue === "teams") new Teams(this.leagueId);
         }
@@ -81,10 +85,39 @@ export default class Navigation {
           teamsOutput.innerHTML = "";
 
           // fetch standings
-          new Standings(this.leagueId);
+          new Standings(this.leagueId).init();
+          this.highlightOverallFilterInitially();
         }
       });
     });
+
+    // filter standings
+    this.filterStandingsBtn.forEach((btn) => {
+      btn.addEventListener(
+        "click",
+        () => {
+          if (!btn.classList.contains("activeFilter")) {
+            console.log("clicked on filter button");
+
+            this.filterStandingsBtn.forEach((btn) =>
+              btn.classList.remove("activeFilter")
+            );
+            btn.classList.add("activeFilter");
+
+            new Standings().populateStandings(btn.dataset.tableType);
+          }
+        },
+        true
+      );
+    });
+  }
+
+  highlightOverallFilterInitially() {
+    this.filterStandingsBtn.forEach((btn) => {
+      btn.classList.remove("activeFilter");
+    });
+
+    this.filterStandingsBtn[0].classList.add("activeFilter");
   }
 
   toggleDropDown() {
