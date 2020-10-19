@@ -1,0 +1,24 @@
+#scorersOutput {
+  display: none;
+  margin-top: 7vh;
+  min-height: 93vh;
+
+  .scorersWrap {
+    display: flex;
+    margin: auto;
+    max-width: 90%;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+    .scorer {
+      background-color: #f4f4f4;
+      margin: 1.25em;
+      padding: 1em;
+      min-width: 15.625rem;
+      border-radius: 0.5em;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

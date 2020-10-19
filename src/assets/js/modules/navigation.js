@@ -1,6 +1,7 @@
 import PreLoader from "./preloader";
 import Teams from "./teamsHandler";
 import Standings from "./standingsHandler";
+import Scorers from "./scorersHandler";
 
 export default class Navigation {
   constructor(leagueId) {
@@ -41,7 +42,7 @@ export default class Navigation {
 
           if (this.statValue === "standings")
             new Standings(this.leagueId).init();
-          else if (this.statValue === "scorers") scorers(data);
+          else if (this.statValue === "scorers") new Scorers(this.leagueId);
           else if (this.statValue === "teams") new Teams(this.leagueId);
         }
       });

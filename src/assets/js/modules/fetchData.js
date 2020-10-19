@@ -3,33 +3,63 @@ function handleFetchErrors(res) {
   return res;
 }
 
+const offlineEndpoints = (leagueId) => {
+  return {
+    leagueDetails: `./backupData/${leagueId}.json`,
+    standings: `./backupData/${leagueId}Standings.json`,
+    teams: `./backupData/${leagueId}Teams.json`,
+    scorers: `./backupData/${leagueId}Scorers.json`,
+    particularTeam: `./backupData/athletiMadrid.json`,
+    matches: "",
+  };
+};
+
+const onlineEndpoints = (leagueId) => {
+  return {
+    leagueDetails: `https://api.football-data.org/v2/competitions/${leagueId}`,
+    standings: `https://api.football-data.org/v2/competitions/${leagueId}/standings`,
+    teams: `https://api.football-data.org/v2/competitions/${leagueId}/teams`,
+    particularTeam: `https://api.football-data.org/v2/teams/${leagueId}`,
+    scorers: `https://api.football-data.org/v2/competitions/${leagueId}/scorers`,
+    matches: `https://api.football-data.org/v2/teams/${leagueId}/matches/`,
+  };
+};
+
 export function fetchData(dataToBeFetched, leagueId) {
+  const {
+    leagueDetails,
+    standings,
+    teams,
+    particularTeam,
+    matches,
+    scorers,
+  } = onlineEndpoints(leagueId);
+
   return new Promise((resolve, reject) => {
     let url;
 
     if (!dataToBeFetched) {
-      url = `https://api.football-data.org/v2/competitions/${leagueId}`;
-      // url = `./backupData/${leagueId}.json`;
+      url = leagueDetails;
     }
 
     if (dataToBeFetched === "standings") {
-      url = `https://api.football-data.org/v2/competitions/${leagueId}/${dataToBeFetched}`;
-      // url = `./backupData/${leagueId}Standings.json`;
+      url = standings;
     }
 
     if (dataToBeFetched === "teams") {
-      url = `https://api.football-data.org/v2/competitions/${leagueId}/teams`;
-      // url = `./backupData/${leagueId}Teams.json`;
+      url = teams;
     }
 
     if (dataToBeFetched === "particularTeam") {
-      url = `https://api.football-data.org/v2/teams/${leagueId}`;
-      // url = "./backupData/athletiMadrid.json";
+      url = particularTeam;
     }
 
     if (dataToBeFetched === "matches") {
-      console.log("No backup data found for matches...");
-      url = `https://api.football-data.org/v2/teams/${leagueId}/matches/`;
+      url = matches;
+    }
+
+    if (dataToBeFetched === "scorers") {
+      url = scorers;
     }
 
     let myHeaders = new Headers({
