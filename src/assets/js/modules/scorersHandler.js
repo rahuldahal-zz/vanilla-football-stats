@@ -28,21 +28,26 @@ export default class Scorers {
     this.teamsOutput.style.display = "none";
     this.scorersOutput.style.display = "flex";
     PreLoader.prototype.hideLoader();
+    console.log(this.data);
 
+    // always start on top
+    this.scorersOutput.scrollTop = 0;
     const scorersWrap = this.scorersOutput.firstElementChild;
     scorersWrap.innerHTML = "";
     const { scorers } = this.data;
     scorers.map((scorer) => {
-      const { name, nationality, position, dob } = scorer.player;
+      const { name, nationality, position, dateOfBirth } = scorer.player;
       scorersWrap.insertAdjacentHTML(
         "beforeend",
         `
             <div class="scorer">
-                <h3 class="name">${name}</h3>
+            <h2 class="goals">${scorer.numberOfGoals} Goals</h2> 
+                <h4 class="name">${name}</h4>
                 <p class="position">${position}</p>
                 <p class="country">${nationality}</p>
-                <span class="age">33 yrs</span>
-                <strong class="goals">${scorer.numberOfGoals}</strong> Goals
+                <span class="age">${
+                  new Date().getFullYear() - new Date(dateOfBirth).getFullYear()
+                } yrs</span>
             </div>
     `
       );

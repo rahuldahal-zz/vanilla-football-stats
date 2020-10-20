@@ -19,11 +19,10 @@ body {
   background-size: cover;
   font-family: "Proza Libre", "serif";
   background-attachment: fixed !important;
+  overflow-x: hidden;
 
   @include for_768 {
     background: linear-gradient(rgba(0, 102, 153, 0.6), rgba(0, 102, 153, 0.8)),
       url("/assets/images/background_mobile.webp") no-repeat;
   }
 }
-
-
