@@ -12,15 +12,14 @@ export default class TeamInfo {
     fetchData("matches", teamId)
       .then((data) => {
         console.log("The team id: ", this.teamId);
-        PreLoader.prototype.hideLoader();
         this.currentForm(null, data);
       })
       .catch(() => this.currentForm("Error while fetching the data..."));
 
     fetchData("particularTeam", teamId)
       .then((data) => {
-        PreLoader.prototype.hideLoader();
         this.showTeamInfo(data);
+        PreLoader.prototype.hideLoader();
       })
       .catch(() => {
         PreLoader.prototype.hideLoader();
