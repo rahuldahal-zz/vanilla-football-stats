@@ -1,6 +1,6 @@
-import PreLoader from "./preloader";
+import PreLoader from "./utils/preloader";
 import TeamInfo from "./teamInfo";
-import { fetchData } from "./fetchData";
+import { fetchData } from "./utils/fetchData";
 
 export default class Teams {
   constructor(leagueId) {

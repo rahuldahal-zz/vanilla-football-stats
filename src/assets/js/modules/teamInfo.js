@@ -1,6 +1,6 @@
-import { fetchData } from "./fetchData";
-import PreLoader from "./preloader";
-import FlashMessage from "./flashMessage";
+import { fetchData } from "./utils/fetchData";
+import PreLoader from "./utils/preloader";
+import FlashMessage from "./utils/flashMessage";
 const flash = new FlashMessage();
 
 export default class TeamInfo {

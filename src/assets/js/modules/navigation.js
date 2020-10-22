@@ -1,7 +1,16 @@
-import PreLoader from "./preloader";
+import PreLoader from "./utils/preloader";
 import Teams from "./teamsHandler";
 import Standings from "./standingsHandler";
 import Scorers from "./scorersHandler";
+import Router from "./utils/router";
+
+const leagueIdAndNameMap = {
+  2002: "bundesliga",
+  2014: "laliga",
+  2015: "ligueone",
+  2019: "seriea",
+  2021: "premierleague",
+};
 
 export default class Navigation {
   constructor(leagueId) {
@@ -19,32 +28,14 @@ export default class Navigation {
     this.events();
   }
 
-  // select for "standings" || "teams" || "scorers"
-
   events() {
+    // select for "standings" || "teams" || "scorers"
+
     this.navigationButtons.forEach((stat) => {
-      stat.addEventListener("click", (e) => {
-        // only run if it's not already active
-
-        if (!stat.classList.contains("active")) {
-          PreLoader.prototype.showLoader();
-
-          this.statValue = e.target.getAttribute("id");
-          console.log("clicked on stat: ", this.statValue);
-
-          // remove the "active" class
-          this.navigationButtons.forEach((btn) => {
-            btn.classList.remove("active");
-          });
-
-          // add the "active" class to targeted element
-          e.target.classList.add("active");
-
-          if (this.statValue === "standings")
-            new Standings(this.leagueId).init();
-          else if (this.statValue === "scorers") new Scorers(this.leagueId);
-          else if (this.statValue === "teams") new Teams(this.leagueId);
-        }
+      new Router({
+        link: stat,
+        path: `/${leagueIdAndNameMap[this.leagueId]}${stat.dataset.path}`,
+        callback: () => this.navMenuCallback(stat),
       });
     });
 
@@ -54,41 +45,9 @@ export default class Navigation {
 
     // dropdownLeagues dropdown handler
     this.dropdownLeagues.forEach((league) => {
-      let selectedLeague = document.querySelector("#selected>span");
-      league.addEventListener("click", (e) => {
-        // execute only when the selected "league" is different from "current" league
-
-        if (selectedLeague.textContent != e.currentTarget.textContent) {
-          PreLoader.prototype.showLoader();
-
-          // collapse the dropdownLeagueContainer
-
-          dropdownLeagueContainer.classList.remove("scaleY1");
-          selectedLeague.textContent = e.currentTarget.textContent;
-
-          // ends
-
-          selected.style.transform = "translateY(-80px)";
-
-          // remove/set active class
-
-          for (let btn of this.navigationButtons) {
-            if (btn.classList.contains("active")) {
-              btn.classList.remove("active");
-              break;
-            }
-          }
-
-          // to highlight "standings" initially on every selection
-          this.navigationButtons[2].classList.add("active");
-
-          this.leagueId = league.dataset.league;
-          teamsOutput.innerHTML = "";
-
-          // fetch standings
-          new Standings(this.leagueId).init();
-          this.highlightOverallFilterInitially();
-        }
+      new Router({
+        link: league,
+        callback: () => this.dropdownLeaguesCallback(league),
       });
     });
 
@@ -111,6 +70,66 @@ export default class Navigation {
         true
       );
     });
+  }
+
+  navMenuCallback(stat) {
+    // only run if it's not already active
+
+    if (!stat.classList.contains("active")) {
+      PreLoader.prototype.showLoader();
+
+      this.statValue = stat.getAttribute("id");
+      console.log("clicked on stat: ", this.statValue);
+
+      // remove the "active" class
+      this.navigationButtons.forEach((btn) => {
+        btn.classList.remove("active");
+      });
+
+      // add the "active" class to targeted element
+      stat.classList.add("active");
+
+      if (this.statValue === "standings") new Standings(this.leagueId).init();
+      else if (this.statValue === "scorers") new Scorers(this.leagueId);
+      else if (this.statValue === "teams") new Teams(this.leagueId);
+    }
+  }
+
+  dropdownLeaguesCallback(league) {
+    let selectedLeague = document.querySelector("#selected>span");
+    // execute only when the selected "league" is different from "current" league
+
+    if (selectedLeague.textContent != league.textContent) {
+      PreLoader.prototype.showLoader();
+
+      // collapse the dropdownLeagueContainer
+
+      dropdownLeagueContainer.classList.remove("scaleY1");
+      selectedLeague.textContent = league.textContent;
+
+      // ends
+
+      selected.style.transform = "translateY(-80px)";
+
+      // remove/set active class
+
+      for (let btn of this.navigationButtons) {
+        if (btn.classList.contains("active")) {
+          btn.classList.remove("active");
+          break;
+        }
+      }
+
+      // to highlight "standings" initially on every selection
+      this.navigationButtons[2].classList.add("active");
+
+      this.leagueId = league.dataset.league;
+      teamsOutput.innerHTML = "";
+
+      // fetch standings
+      new Standings(this.leagueId).init();
+      this.highlightOverallFilterInitially();
+    }
   }
 
   highlightOverallFilterInitially() {

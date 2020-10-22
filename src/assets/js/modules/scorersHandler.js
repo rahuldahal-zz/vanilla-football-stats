@@ -1,5 +1,5 @@
-import { fetchData } from "./fetchData";
-import PreLoader from "./preloader";
+import { fetchData } from "./utils/fetchData";
+import PreLoader from "./utils/preloader";
 
 export default class Scorers {
   constructor(leagueId) {

@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta property="og:site_name" content="footballstats.epizy.com" />
+  <meta property="og:site_name" content="footballstats.tk" />
   <meta property="og:title" content="footballStats" />
-  <meta property="og:url" content="http://footballstats.epizy.com" />
+  <meta property="og:url" content="https://footballstats.tk" />
   <meta property="og:type" content="website" />
   <meta property="og:description" content="Football Statistics for Popular Leagues" />
-  <meta property="og:image" content="http://footballstats.epizy.com/img/ogImg.png" />
+  <meta property="og:image" content="https://footballstats.tk/img/ogImg.png" />
   <title>FootballStats</title>
   <script src="https://kit.fontawesome.com/2628210dc1.js" crossorigin="anonymous"></script>
   <link href="https://fonts.googleapis.com/css?family=Proza+Libre:400,500&display=swap" rel="stylesheet" />
@@ -36,19 +36,19 @@
       <p><em>Football Statistics of Popular Leagues</em></p>
       <h3>Select the league</h3>
       <div id="selectLeague">
-        <button class="clickable" data-league-name="Premier League" data-league="2021">
+        <button class="clickable route" data-path="/premierleague/standings" data-league-name="Premier League" data-league="2021">
           <img src="/assets/images/premierleague.png" alt="" />
         </button>
-        <button class="clickable" data-league-name="La Liga" data-league="2014">
+        <button class="clickable route" data-path="/laliga/standings" data-league-name="La Liga" data-league="2014">
           <img src="/assets/images/laliga.png" alt="" />
         </button>
-        <button class="clickable" data-league-name="Serie A" data-league="2019">
+        <button class="clickable route" data-path="/seriea/standings" data-league-name="Serie A" data-league="2019">
           <img src="/assets/images/seriea.png" alt="" />
         </button>
-        <button class="clickable" data-league-name="Bundesliga" data-league="2002">
+        <button class="clickable route" data-path="/bundesliga/standings" data-league-name="Bundesliga" data-league="2002">
           <img src="/assets/images/bundesliga.png" alt="" />
         </button>
-        <button class="clickable" data-league-name="Ligue 1" data-league="2015">
+        <button class="clickable route" data-path="/ligueone/standings" data-league-name="Ligue 1" data-league="2015">
           <img src="/assets/images/ligueone.png" alt="" />
         </button>
       </div>
@@ -62,11 +62,11 @@
         <i class="fas fa-caret-down" style="margin-left: 10px;"></i>
       </div>
       <div id="dropdownLeagueContainer">
-        <button class="league" data-league="2021">Premier League</button>
-        <button class="league" data-league="2014">La Liga</button>
-        <button class="league" data-league="2019">Serie A</button>
-        <button class="league" data-league="2015">Ligue 1</button>
-        <button class="league" data-league="2002">Bundesliga</button>
+        <button class="league" data-league="2021" data-path="/premierleague/standings">Premier League</button>
+        <button class="league" data-league="2014" data-path=".laliga/standings">La Liga</button>
+        <button class="league" data-league="2019" data-path="/seriea/standings">Serie A</button>
+        <button class="league" data-league="2015" data-path="/ligueone/standings">Ligue 1</button>
+        <button class="league" data-league="2002" data-path="/bundesliga/standings">Bundesliga</button>
       </div>
     </div>
     <span id="author">by <a href="https://rahuldahal.com.np" target="_blank">Rahul Dahal</a>
@@ -74,8 +74,9 @@
       <a href=""><i class="fab fa-github" style="margin-left: 10px;"></i></a></span>
   </header>
   <nav id="navigation">
-    <button id="teams">Teams</button> <button id="scorers">Scorers</button>
-    <button id="standings" class="active">Standings</button>
+    <button id="teams" data-path="/teams">Teams</button> 
+    <button id="scorers" data-path="/scorers">Scorers</button>
+    <button id="standings" class="active" data-path="/standings">Standings</button>
   </nav>
 
   <!-- Teams for particular league -->

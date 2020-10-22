@@ -1,8 +1,8 @@
-import PreLoader from "./preloader";
-import { fetchData } from "./fetchData";
-import LocalStorage from "./localStorage";
+import PreLoader from "./utils/preloader";
+import { fetchData } from "./utils/fetchData";
+import LocalStorage from "./utils/localStorage";
 import TeamInfo from "./teamInfo";
-import FlashMessage from "./flashMessage";
+import FlashMessage from "./utils/flashMessage";
 const flash = new FlashMessage();
 
 export default class Standings {

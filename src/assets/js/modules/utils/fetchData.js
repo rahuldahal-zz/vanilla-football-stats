@@ -1,15 +1,13 @@
-function handleFetchErrors(res) {
-  if (!res.ok) throw new Error("something went wrong");
-  return res;
-}
+import nodeEnv from "../../../../../getNodeEnv";
+const env = nodeEnv();
 
 const offlineEndpoints = (leagueId) => {
   return {
-    leagueDetails: `./backupData/${leagueId}.json`,
-    standings: `./backupData/${leagueId}Standings.json`,
-    teams: `./backupData/${leagueId}Teams.json`,
-    scorers: `./backupData/${leagueId}Scorers.json`,
-    particularTeam: `./backupData/athletiMadrid.json`,
+    leagueDetails: `http://localhost:3000/backupData/${leagueId}.json`,
+    standings: `http://localhost:3000/backupData/${leagueId}Standings.json`,
+    teams: `http://localhost:3000/backupData/${leagueId}Teams.json`,
+    scorers: `http://localhost:3000/backupData/${leagueId}Scorers.json`,
+    particularTeam: `http://localhost:3000/backupData/athletiMadrid.json`,
     matches: "",
   };
 };
@@ -26,14 +24,8 @@ const onlineEndpoints = (leagueId) => {
 };
 
 export function fetchData(dataToBeFetched, leagueId) {
-  const {
-    leagueDetails,
-    standings,
-    teams,
-    particularTeam,
-    matches,
-    scorers,
-  } = onlineEndpoints(leagueId);
+  const { leagueDetails, standings, teams, particularTeam, matches, scorers } =
+    env === "build" ? onlineEndpoints(leagueId) : offlineEndpoints(leagueId);
 
   return new Promise((resolve, reject) => {
     let url;
