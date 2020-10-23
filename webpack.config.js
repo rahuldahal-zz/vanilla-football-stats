@@ -1,4 +1,3 @@
-
 //check if current task is "dev" or "build"
 const currentTask = process.env.npm_lifecycle_event;
 
@@ -7,22 +6,26 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const fse = require("fs-extra");
+const Dotenv = require("dotenv-webpack");
 
-let pages = fse.readdirSync("./src").filter(file => {
+let pages = fse
+  .readdirSync("./src")
+  .filter((file) => {
     return file.endsWith(".html");
-}).map((page) => {
+  })
+  .map((page) => {
     return new HtmlWebPackPlugin({
-        filename: page,
-        template: `./src/${page}`
+      filename: page,
+      template: `./src/${page}`,
     });
-})
+  });
 
 class RunAfterCompile {
-    apply(compiler) {
-        compiler.hooks.done.tap("Copy images", function () {
-            fse.copySync("./src/assets/images", "./build/assets/images");
-        })
-    }
+  apply(compiler) {
+    compiler.hooks.done.tap("Copy images", function () {
+      fse.copySync("./src/assets/images", "./build/assets/images");
+    });
+  }
 }
 
 // pages.push(new RunAfterCompile());
@@ -30,66 +33,58 @@ class RunAfterCompile {
 //cssLoaders
 
 let cssConfig = {
-    test: /\.(sa|sc|c)ss$/i,
-    use: [
-        "css-loader?url=false", "sass-loader"
-    ]
-}
-
+  test: /\.(sa|sc|c)ss$/i,
+  use: ["css-loader?url=false", "sass-loader"],
+};
 
 //common settings
 let config = {
-    entry: "./src/assets/js/main.js",
-    plugins: pages,
-    module: {
-        rules: [
-            cssConfig
-        ]
-    }
-}
-
+  entry: "./src/assets/js/main.js",
+  plugins: [new Dotenv(), ...pages],
+  module: {
+    rules: [cssConfig],
+  },
+};
 
 //separate for "development"
 if (currentTask === "dev") {
+  cssConfig.use.unshift("style-loader");
 
-    cssConfig.use.unshift("style-loader");
-
-    config.mode = "development";
-    config.output = {
-        filename: "raahul.js",
-        path: path.resolve(__dirname, "src")
-    };
-    config.devServer = {
-        before: function (app, server) {
-            server._watch("./src/**/*.html");
-        },
-        contentBase: path.join(__dirname, "src"),
-        hot: true,
-        port: 3000,
-        host: "0.0.0.0"
-    };
+  config.mode = "development";
+  config.output = {
+    filename: "raahul.js",
+    path: path.resolve(__dirname, "src"),
+  };
+  config.devServer = {
+    before: function (app, server) {
+      server._watch("./src/**/*.html");
+    },
+    contentBase: path.join(__dirname, "src"),
+    hot: true,
+    port: 3000,
+    host: "0.0.0.0",
+  };
 }
 
 //separate for "production"
 if (currentTask === "build") {
-    cssConfig.use.unshift(MiniCssExtractPlugin.loader);
-    config.mode = "production";
-    config.output = {
-        filename: "[name]-[chunkhash].js",
-        chunkFilename: "[name]-[chunkhash].js",
-        path: path.resolve(__dirname, "build")
-    };
-    config.optimization = {
-        splitChunks: { chunks: "all" }
-    }; //separates vendors and custom scripts
-    config.plugins.push(
-        new CleanWebpackPlugin(),
-        new MiniCssExtractPlugin({
-            filename: "styles-[chunkhash].css"
-        }),
-        new RunAfterCompile()
-    )
+  cssConfig.use.unshift(MiniCssExtractPlugin.loader);
+  config.mode = "production";
+  config.output = {
+    filename: "[name]-[chunkhash].js",
+    chunkFilename: "[name]-[chunkhash].js",
+    path: path.resolve(__dirname, "build"),
+  };
+  config.optimization = {
+    splitChunks: { chunks: "all" },
+  }; //separates vendors and custom scripts
+  config.plugins.push(
+    new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin({
+      filename: "styles-[chunkhash].css",
+    }),
+    new RunAfterCompile()
+  );
 }
-
 
 module.exports = config;

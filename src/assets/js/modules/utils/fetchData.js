@@ -1,6 +1,3 @@
-import nodeEnv from "../../../../../getNodeEnv";
-const env = nodeEnv();
-
 const offlineEndpoints = (leagueId) => {
   return {
     leagueDetails: `http://localhost:3000/backupData/${leagueId}.json`,
@@ -25,7 +22,9 @@ const onlineEndpoints = (leagueId) => {
 
 export function fetchData(dataToBeFetched, leagueId) {
   const { leagueDetails, standings, teams, particularTeam, matches, scorers } =
-    env === "build" ? onlineEndpoints(leagueId) : offlineEndpoints(leagueId);
+    process.env.NODE_ENV === "dev"
+      ? offlineEndpoints(leagueId)
+      : onlineEndpoints(leagueId);
 
   return new Promise((resolve, reject) => {
     let url;
