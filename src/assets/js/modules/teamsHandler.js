@@ -5,6 +5,7 @@ import { fetchData } from "./utils/fetchData";
 export default class Teams {
   constructor(leagueId) {
     this.leagueId = leagueId;
+    console.log(this.leagueId);
     this.fetchTeams();
     this.standingsOutput = document.getElementById("standingsOutput");
     this.teamsOutput = document.getElementById("teamsOutput");

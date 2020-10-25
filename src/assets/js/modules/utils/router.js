@@ -9,12 +9,15 @@ const routes = [];
       return;
     }
     let statePath = e.state.path;
+    console.clear();
     console.log("The state  path is: " + statePath);
     console.log(routes);
     const currentRoute = routes.find((route) => route.path === statePath);
     Router.prototype.load_content(statePath, currentRoute);
   });
 })();
+
+// if it is already registered, don't add event. change the path instead
 
 export default class Router {
   constructor({ link, callback, path }) {
@@ -28,12 +31,22 @@ export default class Router {
 
   init() {
     // Add history "push()" when links are clicked
-    const { path } = this.link.dataset;
-    routes.push({ path, callback: this.callback });
+    const path = this.path || this.link.dataset.path;
+    const doesRouteExist = routes.find((route) => route.path === path);
+    if (!doesRouteExist) {
+      console.log(`will push ${path} in the array`);
+      routes.push({ path, callback: this.callback });
+    }
+
     this.link.addEventListener("click", (e) => {
-      e.preventDefault();
-      this.push(e);
+      this.onClick(e);
     });
+  }
+
+  onClick(e) {
+    e.preventDefault();
+    console.log("on click invokes");
+    this.pushHistory(e);
   }
 
   static getRoutes() {
@@ -48,7 +61,7 @@ export default class Router {
     currentRoute.callback();
   }
 
-  push(event) {
+  pushHistory(event) {
     // get id of the active link
 
     let path = this.path || event.currentTarget.dataset.path;
@@ -56,6 +69,16 @@ export default class Router {
 
     // push state change to the address bar
 
-    window.history.pushState({ path }, `${path}`, `${path}`);
+    const currentState = window.history.state;
+    const noStateOrDifferentState =
+      !currentState || (currentState && currentState.path !== path);
+    // const doesNotAlreadyHaveHistory = historyTrack.find(
+    //   (track) => track === path
+    // );
+    // console.log(doesNotAlreadyHaveHistory);
+    if (noStateOrDifferentState) {
+      console.log("pushing state in history: ", path);
+      window.history.pushState({ path }, `${path}`, `${path}`);
+    }
   }
 }

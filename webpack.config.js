@@ -40,7 +40,6 @@ let cssConfig = {
 //common settings
 let config = {
   entry: "./src/assets/js/main.js",
-  plugins: [new Dotenv(), ...pages],
   module: {
     rules: [cssConfig],
   },
@@ -51,10 +50,11 @@ if (currentTask === "dev") {
   cssConfig.use.unshift("style-loader");
 
   config.mode = "development";
-  config.output = {
-    filename: "raahul.js",
-    path: path.resolve(__dirname, "src"),
-  };
+  (config.plugins = [new Dotenv(), ...pages]),
+    (config.output = {
+      filename: "raahul.js",
+      path: path.resolve(__dirname, "src"),
+    });
   config.devServer = {
     before: function (app, server) {
       server._watch("./src/**/*.html");

@@ -9,12 +9,15 @@ export default class TeamInfo {
     this.teamId = teamId;
     this.selectDOMElements();
 
+    // todo: check the leagueId to get last 3 matches
+
     fetchData("matches", teamId)
       .then((data) => {
         console.log("The team id: ", this.teamId);
         this.currentForm(null, data);
       })
-      .catch(() => this.currentForm("Error while fetching the data..."));
+      .catch();
+    // () => this.currentForm("Error while fetching the data...")
 
     fetchData("particularTeam", teamId)
       .then((data) => {
@@ -156,15 +159,15 @@ export default class TeamInfo {
     let localStorageKey = `${data.matches[0].competition.id} ${data.matches[0].season.startDate}`;
     let shortNames = JSON.parse(localStorage.getItem(localStorageKey));
 
-    console.log(shortNames);
+    console.log(data);
 
     let playedMatchesCount = 0;
 
     for (let i = 0; i < data.matches.length; i++) {
       if (data.matches[i].status === "FINISHED") playedMatchesCount++;
-      else break;
     }
     let previousMatch, lastMatch, nextMatch;
+    console.log(playedMatchesCount);
 
     // get the league matchday whose value  = played
 

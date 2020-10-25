@@ -12,8 +12,23 @@ const leagueIdAndNameMap = {
   2021: "premierleague",
 };
 
+let hasBeenCalledOnce = false;
+
 export default class Navigation {
   constructor(leagueId) {
+    console.log("navigation is called...");
+    this.leagueId = leagueId;
+    if (!hasBeenCalledOnce) {
+      hasBeenCalledOnce = true;
+      this.selectDOMElements();
+      this.events();
+      this.routesForDropdownLeagues();
+      this.routesForNavigationButtons();
+    }
+  }
+
+  selectDOMElements() {
+    console.log("selecting DOM elements...");
     this.navigationButtons = document.querySelectorAll("#navigation>button");
     this.dropdownLeagueContainer = document.getElementById(
       "dropdownLeagueContainer"
@@ -23,33 +38,35 @@ export default class Navigation {
     );
     this.dropdownLeagues = document.querySelectorAll(".league");
     this.selected = document.getElementById("selected");
-    this.leagueId = leagueId;
-    console.log("navigation: ", leagueId);
-    this.events();
   }
 
-  events() {
+  routesForNavigationButtons() {
     // select for "standings" || "teams" || "scorers"
-
     this.navigationButtons.forEach((stat) => {
       new Router({
         link: stat,
-        path: `/${leagueIdAndNameMap[this.leagueId]}${stat.dataset.path}`,
+        path: `/${leagueIdAndNameMap[this.leagueId]}/${stat.getAttribute(
+          "id"
+        )}`,
         callback: () => this.navMenuCallback(stat),
       });
     });
+  }
 
-    // showDropDrownItems
-    this.selected.addEventListener("click", () => this.toggleDropDown());
-    this.selected.addEventListener("keyup", () => this.toggleDropDown());
-
-    // dropdownLeagues dropdown handler
+  routesForDropdownLeagues() {
     this.dropdownLeagues.forEach((league) => {
       new Router({
         link: league,
         callback: () => this.dropdownLeaguesCallback(league),
       });
     });
+  }
+
+  events() {
+    console.log("events is called");
+    // showDropDrownItems
+    this.selected.addEventListener("click", (e) => this.toggleDropDown(e));
+    this.selected.addEventListener("keyup", (e) => this.toggleDropDown(e));
 
     // filter standings
     this.filterStandingsBtn.forEach((btn) => {
@@ -95,7 +112,30 @@ export default class Navigation {
     }
   }
 
+  highlightStat(stat, arrayOfStats) {
+    const array = this.navigationButtons || arrayOfStats;
+    switch (stat) {
+      case "teams":
+        this.removeClassFromAndAddTo(array, array[0], "active");
+        break;
+      case "scorers":
+        this.removeClassFromAndAddTo(array, array[1], "active");
+        break;
+      case "standings":
+        this.removeClassFromAndAddTo(array, array[2], "active");
+        break;
+    }
+  }
+
+  removeClassFromAndAddTo(elements, elementToAddTo, className) {
+    elements.forEach((elem) => elem.classList.remove(className));
+    elementToAddTo.classList.add(className);
+  }
+
   dropdownLeaguesCallback(league) {
+    console.log("dropdown callback is called");
+    this.leagueId = league.dataset.league;
+    this.routesForNavigationButtons();
     let selectedLeague = document.querySelector("#selected>span");
     // execute only when the selected "league" is different from "current" league
 
@@ -111,19 +151,9 @@ export default class Navigation {
 
       selected.style.transform = "translateY(-80px)";
 
-      // remove/set active class
-
-      for (let btn of this.navigationButtons) {
-        if (btn.classList.contains("active")) {
-          btn.classList.remove("active");
-          break;
-        }
-      }
-
       // to highlight "standings" initially on every selection
-      this.navigationButtons[2].classList.add("active");
+      this.highlightStat("standings");
 
-      this.leagueId = league.dataset.league;
       teamsOutput.innerHTML = "";
 
       // fetch standings
@@ -140,8 +170,8 @@ export default class Navigation {
     this.filterStandingsBtn[0].classList.add("activeFilter");
   }
 
-  toggleDropDown() {
-    console.log("clicked");
-    dropdownLeagueContainer.classList.toggle("scaleY1");
+  toggleDropDown(e) {
+    console.log(e.type);
+    this.dropdownLeagueContainer.classList.toggle("scaleY1");
   }
 }

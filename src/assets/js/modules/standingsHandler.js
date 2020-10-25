@@ -4,6 +4,7 @@ import LocalStorage from "./utils/localStorage";
 import TeamInfo from "./teamInfo";
 import FlashMessage from "./utils/flashMessage";
 const flash = new FlashMessage();
+import Navigation from "./navigation";
 
 export default class Standings {
   constructor(leagueId) {
@@ -22,6 +23,10 @@ export default class Standings {
   // leagueDetails will have the list of all the seasons, and of course currentSeason
 
   init() {
+    const navigation = new Navigation().highlightStat(
+      "standings",
+      document.querySelectorAll("#navigation>button")
+    );
     fetchData(null, this.leagueId)
       .then((leagueDetails) =>
         LocalStorage.prototype.isTeamNamesOnLocalStorage(
@@ -31,7 +36,7 @@ export default class Standings {
       )
       .then((response) => {
         this.shortNames = response;
-        console.log("Short names: ", this.shortNames);
+
         this.fetchStandings();
       })
       .catch((err) => {
@@ -64,8 +69,6 @@ export default class Standings {
 
   populateStandings(type) {
     this.data = this.data || JSON.parse(localStorage.getItem("standings"));
-    console.log("on populate standings data: ", this.data.competition.name);
-    console.log("By type: ", type);
 
     // hide teams, show standings
     this.teamsOutput.style.display = "none";
@@ -144,7 +147,6 @@ export default class Standings {
       this.domTable.appendChild(tr);
     }
 
-    console.log("Matches played: ", this.matchesPlayed);
     this.showTeamInfoHandler();
   }
 
@@ -153,8 +155,6 @@ export default class Standings {
     this.teamNames.forEach((team) => {
       team.style.cursor = "pointer";
       team.addEventListener("click", (e) => {
-        console.log(e.currentTarget);
-        console.log(e.currentTarget.dataset.id);
         new TeamInfo(e.currentTarget.dataset.id);
       });
     });
