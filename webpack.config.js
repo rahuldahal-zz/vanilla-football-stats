@@ -43,6 +43,7 @@ let config = {
   module: {
     rules: [cssConfig],
   },
+  plugins: []
 };
 
 //separate for "development"
@@ -50,11 +51,11 @@ if (currentTask === "dev") {
   cssConfig.use.unshift("style-loader");
 
   config.mode = "development";
-  (config.plugins = [new Dotenv(), ...pages]),
-    (config.output = {
+  config.plugins.push(new Dotenv(), ...pages);
+    config.output = {
       filename: "raahul.js",
       path: path.resolve(__dirname, "src"),
-    });
+    };
   config.devServer = {
     before: function (app, server) {
       server._watch("./src/**/*.html");
