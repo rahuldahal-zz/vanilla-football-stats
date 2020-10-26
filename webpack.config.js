@@ -43,7 +43,7 @@ let config = {
   module: {
     rules: [cssConfig],
   },
-  plugins: [...pages]
+  plugins: [],
 };
 
 //separate for "development"
@@ -52,18 +52,10 @@ if (currentTask === "dev") {
 
   config.mode = "development";
   config.plugins.push(new Dotenv());
-    config.output = {
-      filename: "raahul.js",
-      path: path.resolve(__dirname, "src"),
-    };
-  config.devServer = {
-    before: function (app, server) {
-      server._watch("./src/**/*.html");
-    },
-    contentBase: path.join(__dirname, "src"),
-    hot: true,
-    port: 3000,
-    host: "0.0.0.0",
+  config.watch = true;
+  config.output = {
+    filename: "bundled.js",
+    path: path.resolve(__dirname, "src"),
   };
 }
 
@@ -80,6 +72,7 @@ if (currentTask === "build") {
     splitChunks: { chunks: "all" },
   }; //separates vendors and custom scripts
   config.plugins.push(
+    ...pages,
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: "styles-[chunkhash].css",

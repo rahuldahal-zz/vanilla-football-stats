@@ -1,6 +1,9 @@
 import PreLoader from "./modules/utils/preloader";
 new PreLoader();
 
+import Router from "./modules/utils/router";
+Router.checkURL();
+
 import LandingPage from "./modules/landingPage";
 new LandingPage();
 

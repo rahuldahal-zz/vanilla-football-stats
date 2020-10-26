@@ -81,4 +81,8 @@ export default class Router {
       window.history.pushState({ path }, `${path}`, `${path}`);
     }
   }
+
+  static checkURL() {
+    console.log(`Current URL path is: ${location.pathname}`);
+  }
 }

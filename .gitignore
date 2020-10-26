@@ -4,3 +4,4 @@ backupData
 .env
 # Local Netlify folder
 .netlify
+bundled.js
