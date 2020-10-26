@@ -43,7 +43,7 @@ let config = {
   module: {
     rules: [cssConfig],
   },
-  plugins: []
+  plugins: [...pages]
 };
 
 //separate for "development"
@@ -51,7 +51,7 @@ if (currentTask === "dev") {
   cssConfig.use.unshift("style-loader");
 
   config.mode = "development";
-  config.plugins.push(new Dotenv(), ...pages);
+  config.plugins.push(new Dotenv());
     config.output = {
       filename: "raahul.js",
       path: path.resolve(__dirname, "src"),
