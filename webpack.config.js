@@ -44,6 +44,9 @@ let config = {
     rules: [cssConfig],
   },
   plugins: [],
+  output: {
+    publicPath: "/"
+  }
 };
 
 //separate for "development"
@@ -53,7 +56,7 @@ if (currentTask === "dev") {
   config.mode = "development";
   config.plugins.push(new Dotenv());
   config.watch = true;
-  config.output = {
+  config.output = {...config.output,
     filename: "bundled.js",
     path: path.resolve(__dirname, "src"),
   };
@@ -63,7 +66,7 @@ if (currentTask === "dev") {
 if (currentTask === "build") {
   cssConfig.use.unshift(MiniCssExtractPlugin.loader);
   config.mode = "production";
-  config.output = {
+  config.output = {...config.output,
     filename: "[name]-[chunkhash].js",
     chunkFilename: "[name]-[chunkhash].js",
     path: path.resolve(__dirname, "build"),
