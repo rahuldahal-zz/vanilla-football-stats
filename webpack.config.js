@@ -8,18 +8,6 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const fse = require("fs-extra");
 const Dotenv = require("dotenv-webpack");
 
-let pages = fse
-  .readdirSync("./src")
-  .filter((file) => {
-    return file.endsWith(".html");
-  })
-  .map((page) => {
-    return new HtmlWebPackPlugin({
-      filename: page,
-      template: `./src/${page}`,
-    });
-  });
-
 class RunAfterCompile {
   apply(compiler) {
     compiler.hooks.done.tap("Copy images", function () {
@@ -28,7 +16,6 @@ class RunAfterCompile {
   }
 }
 
-// pages.push(new RunAfterCompile());
 
 //cssLoaders
 
@@ -37,13 +24,31 @@ let cssConfig = {
   use: ["css-loader?url=false", "sass-loader"],
 };
 
+let ejsLoader = {
+  test: /\.ejs$/, 
+  use: {
+    loader: 'ejs-compiled-loader',
+    options: {
+      htmlmin: true,
+      htmlminOptions: {
+        removeComments: true
+      }
+    }
+  }
+}
+
+
 //common settings
 let config = {
   entry: "./src/assets/js/main.js",
   module: {
-    rules: [cssConfig],
+    rules: [cssConfig, ejsLoader],
   },
-  plugins: [],
+  plugins: [new HtmlWebPackPlugin({
+    filename: 'index.html',
+    template: './src/template/index.template.ejs',
+    devServer: "http://localhost:5000"
+  })],
   output: {
     publicPath: "/"
   }
@@ -55,7 +60,7 @@ if (currentTask === "dev") {
 
   config.mode = "development";
   config.plugins.push(new Dotenv());
-  config.watch = true;
+  // config.watch = true;
   config.output = {...config.output,
     filename: "bundled.js",
     path: path.resolve(__dirname, "src"),
@@ -75,7 +80,6 @@ if (currentTask === "build") {
     splitChunks: { chunks: "all" },
   }; //separates vendors and custom scripts
   config.plugins.push(
-    ...pages,
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: "styles-[chunkhash].css",

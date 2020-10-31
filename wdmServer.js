@@ -9,6 +9,9 @@ const compiler = webpack(webpackConfigFile);
 app.use(
   webpackDevMiddleware(compiler, {
     publicPath: webpackConfigFile.output.publicPath,
+    writeToDisk: (filePath) => {
+      return /\.html$/.test(filePath);
+    },
   })
 );
 
