@@ -1,202 +1,26 @@
-<!-- loader container -->
-<div id="loader">
-    <div id="loaderWrap">
-        <img src="/assets/images/soccer.png" alt="" />
-        <h2>FootballStats</h2>
-        <p>is loading...</p>
-    </div>
-</div>
-<!-- loader ends -->
+<!-- loader -->
+<%- include ./bodyChunks/loader.ejs%>
 
-<!-- so that landingContent is parsed first -->
-<div id="landingContent">
-    <div id="landingContentWrap">
-        <h1>FootballStats</h1>
-        <p><em>Football Statistics of Popular Leagues</em></p>
-        <h3>Select the league</h3>
-        <div id="selectLeague">
-            <button class="clickable route" data-path="/premierleague/standings" data-league-name="Premier League"
-                data-league="2021">
-                <img src="/assets/images/premierleague.png" alt="" />
-            </button>
-            <button class="clickable route" data-path="/laliga/standings" data-league-name="La Liga" data-league="2014">
-                <img src="/assets/images/laliga.png" alt="" />
-            </button>
-            <button class="clickable route" data-path="/seriea/standings" data-league-name="Serie A" data-league="2019">
-                <img src="/assets/images/seriea.png" alt="" />
-            </button>
-            <button class="clickable route" data-path="/bundesliga/standings" data-league-name="Bundesliga"
-                data-league="2002">
-                <img src="/assets/images/bundesliga.png" alt="" />
-            </button>
-            <button class="clickable route" data-path="/ligueone/standings" data-league-name="Ligue 1"
-                data-league="2015">
-                <img src="/assets/images/ligueone.png" alt="" />
-            </button>
-        </div>
-    </div>
-</div>
-<!-- landing content ends here -->
-<header>
-    <div id="selectWrapper">
-        <div id="selected" tabindex="0">
-            <span>Premier League</span>
-            <i class="fas fa-caret-down" style="margin-left: 10px;"></i>
-        </div>
-        <div id="dropdownLeagueContainer">
-            <button class="league" data-league="2021" data-path="/premierleague/standings">Premier League</button>
-            <button class="league" data-league="2014" data-path="/laliga/standings">La Liga</button>
-            <button class="league" data-league="2019" data-path="/seriea/standings">Serie A</button>
-            <button class="league" data-league="2015" data-path="/ligueone/standings">Ligue 1</button>
-            <button class="league" data-league="2002" data-path="/bundesliga/standings">Bundesliga</button>
-        </div>
-    </div>
-    <span id="author">by <a href="https://rahuldahal.com.np" target="_blank">Rahul Dahal</a>
-        <a href="https://twitter.com/raahuldaahal"><i class="fab fa-twitter" style="margin-left: 10px;"></i></a>
-        <a href=""><i class="fab fa-github" style="margin-left: 10px;"></i></a></span>
-</header>
-<nav id="navigation">
-    <button id="teams">Teams</button>
-    <button id="scorers">Scorers</button>
-    <button id="standings" class="active">Standings</button>
-</nav>
+<!-- landingContent. So that it is parsed first -->
+<%- include ./bodyChunks/landingContent.ejs%>
+
+<!-- header -->
+<%- include ./bodyChunks/header.ejs%>
+
+<!-- navigation -->
+<%- include ./bodyChunks/navigation.ejs%>
 
 <!-- Teams for particular league -->
+<%- include ./bodyChunks/teams.ejs%>
 
-<div id="teamsOutput"></div>
+<!-- standings table -->
+<%- include ./bodyChunks/standings.ejs%>
 
+<!-- scorers -->
+<%- include ./bodyChunks/scorers.ejs%>
 
-<!-- points table -->
+<!-- team info -->
+<%- include ./bodyChunks/teamInfo.ejs%>
 
-<div id="standingsOutput">
-    <table id="standingsOutput__table">
-        <tr class="imp">
-            <th>Position</th>
-            <th>Team</th>
-            <th>Played</th>
-            <th>Won</th>
-            <th>Drew</th>
-            <th>Lost</th>
-            <th>Goals For</th>
-            <th>Goals Against</th>
-            <th>Goal Diff.</th>
-            <th>Points</th>
-        </tr>
-    </table>
-
-    <aside id="standingsOutput__filter">
-        <div id="filterButtonsWrap">
-            <button class="filterBtn activeFilter" data-table-type="total">Overall</button>
-            <button class="filterBtn" data-table-type="home">Home</button>
-            <button class="filterBtn" data-table-type="away">Away</button>
-        </div>
-    </aside>
-</div>
-
-
-
-<div id="scorersOutput">
-    <div class="scorersWrap">
-
-    </div>
-</div>
-
-
-<div id="teamInfoCard">
-    <button id="collapse"><i class="fas fa-arrow-left"></i></button>
-    <div id="coverPhoto"></div>
-    <div id="logoWrapper"></div>
-    <div id="clubName"></div>
-    <div id="wrap">
-        <div id="general">
-            <h2>General Info.</h2>
-            <div id="generalContent">
-                <div id="info">
-                    <div id="country"></div>
-                    <div id="activeCompetitions">
-                        <h4>Active Competitions</h4>
-                    </div>
-                    <div id="stadium">
-                        <h4>Stadium</h4>
-                        <p id="stadiumName"></p>
-                    </div>
-                    <div id="contact">
-                        <h4>Contact</h4>
-                        <address id="address"></address>
-                        <a href="" id="email"></a>
-                        <a href="" id="website" target="_blank"></a>
-                    </div>
-                </div>
-                <div id="matches">
-                    <div id="previousMatch">
-                        <h5>Previous Match</h5>
-                        <div class="score">
-                            <div class="home">
-                                <h3 id="previousHomeName">fetching...</h3>
-                                <p id="previousHomeGoal"></p>
-                            </div>
-                            <div class="away">
-                                <p id="previousAwayGoal"></p>
-                                <h3 id="previousAwayName">fetching...</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="lastMatch">
-                        <h5>Last Match</h5>
-                        <div class="score">
-                            <div class="home">
-                                <h3 id="lastHomeName">fetching...</h3>
-                                <p id="lastHomeGoal"></p>
-                            </div>
-                            <div class="away">
-                                <p id="lastAwayGoal"></p>
-                                <h3 id="lastAwayName">fetching...</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="nextMatch">
-                        <h5>Next Match</h5>
-                        <div class="score">
-                            <div class="home">
-                                <h3 id="nextHomeName">fetching...</h3>
-                            </div>
-                            <em style="margin: 1rem;">v/s</em>
-                            <div class="away">
-                                <h3 id="nextAwayName">fetching...</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="squad">
-            <h2>Squad</h2>
-            <div id="manager">
-                <h3>Manager</h3>
-            </div>
-            <div id="playersWrapper">
-                <div id="goalkeepers">
-                    <h3>Goalkeepers</h3>
-                    <div class="players"></div>
-                </div>
-                <div id="defenders">
-                    <h3>Defenders</h3>
-                    <div class="players"></div>
-                </div>
-                <div id="midfielders">
-                    <h3>Midfielders</h3>
-                    <div class="players"></div>
-                </div>
-                <div id="attackers">
-                    <h3>Attackers</h3>
-                    <div class="players"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="flashMessage">
-    <p class="flashMessage__message"></p>
-</div>
+<!-- flash message -->
+<%- include ./bodyChunks/flashMessage.ejs%>

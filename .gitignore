@@ -5,3 +5,4 @@ backupData
 # Local Netlify folder
 .netlify
 bundled.js
+index.html
