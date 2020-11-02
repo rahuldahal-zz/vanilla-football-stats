@@ -5,8 +5,9 @@ export default class Scorers {
   constructor(leagueId) {
     this.leagueId = leagueId;
     this.standingsOutput = document.getElementById("standingsOutput");
-    this.teamsOutput = document.getElementById("teamsOutput");
     this.scorersOutput = document.getElementById("scorersOutput");
+    this.teamsOutput = document.getElementById("teamsOutput");
+    this.matchesOutput = document.getElementById("matchesOutput");
     this.events();
   }
 
@@ -25,6 +26,7 @@ export default class Scorers {
 
   injectScorers() {
     this.standingsOutput.style.display = "none";
+    this.matchesOutput.style.display = "none";
     this.teamsOutput.style.display = "none";
     this.scorersOutput.style.display = "flex";
     PreLoader.prototype.hideLoader();

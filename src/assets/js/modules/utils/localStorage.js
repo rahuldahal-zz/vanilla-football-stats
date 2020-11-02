@@ -1,3 +1,4 @@
+import { identity } from "lodash";
 import { fetchData } from "./fetchData";
 
 export default class LocalStorage {
@@ -6,6 +7,7 @@ export default class LocalStorage {
       this.key = `${leagueId} ${season}`;
       let shortNames = localStorage.getItem(this.key);
       if (!shortNames) {
+        localStorage.clear();
         fetchData("teams", leagueId)
           .then((data) => {
             this.setShortNamesToLocalStorage(data.teams);
@@ -25,7 +27,10 @@ export default class LocalStorage {
     this.shortNames = [];
 
     // pushing "teamId" & "teamShortName"
-    this.shortNames = teams.map((team) => [team.id, team.shortName]);
+    this.shortNames = teams.map((team) => {
+      const {id, shortName, crestUrl} = team;
+      return {id, shortName, crestUrl};
+    });
 
     // set in the LocalStorage
     localStorage.setItem(this.key, JSON.stringify(this.shortNames));

@@ -14,7 +14,7 @@ export default class TeamInfo {
     fetchData("matches", teamId)
       .then((data) => {
         console.log("The team id: ", this.teamId);
-        this.currentForm(null, data);
+        // this.currentForm(null, data);
       })
       .catch();
     // () => this.currentForm("Error while fetching the data...")
@@ -75,7 +75,7 @@ export default class TeamInfo {
 
     console.log(data);
 
-    // this.logoWrapper.style.backgroundImage = `url(${data.crestUrl})`;
+    this.logoWrapper.style.backgroundImage = `url(${data.crestUrl})`;
     this.clubName.innerHTML = `<h1 style="display: inline-block; margin-right: 10px;">${data.name}</h1><small>${data.founded}</small>`;
     this.country.innerHTML = `<h4>Country</h4><em>${data.area.name}</em>`;
     this.stadiumName.textContent = data.venue;

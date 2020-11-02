@@ -9,7 +9,9 @@ import Navigation from "./navigation";
 export default class Standings {
   constructor(leagueId) {
     this.standingsOutput = document.getElementById("standingsOutput");
+    this.scorersOutput = document.getElementById("scorersOutput");
     this.teamsOutput = document.getElementById("teamsOutput");
+    this.matchesOutput = document.getElementById("matchesOutput");
     this.domTable = document.querySelector("#standingsOutput>table");
 
     this.matchesPlayed = [];
@@ -27,22 +29,7 @@ export default class Standings {
       "standings",
       document.querySelectorAll("#navigation>button")
     );
-    fetchData(null, this.leagueId)
-      .then((leagueDetails) =>
-        LocalStorage.prototype.isTeamNamesOnLocalStorage(
-          this.leagueId,
-          leagueDetails.currentSeason.startDate
-        )
-      )
-      .then((response) => {
-        this.shortNames = response;
-
-        this.fetchStandings();
-      })
-      .catch((err) => {
-        console.error(err);
-        flash.error("there was an error while fetching the resource.");
-      });
+    this.fetchStandings();
   }
 
   // fetch standings
@@ -72,6 +59,8 @@ export default class Standings {
 
     // hide teams, show standings
     this.teamsOutput.style.display = "none";
+    this.scorersOutput.style.display = "none";
+    this.matchesOutput.style.display = "none";
     this.standingsOutput.style.display = "flex";
 
     this.matchesPlayed = [];
@@ -98,9 +87,7 @@ export default class Standings {
     // start populating the content
 
     const { competition, season } = this.data;
-    this.shortNames =
-      this.shortNames ||
-      JSON.parse(localStorage.getItem(`${competition.id} ${season.startDate}`));
+    this.shortNames = JSON.parse(localStorage.getItem(`${competition.id} ${season.startDate}`));
 
     for (let standing of table) {
       // getting team id and matches played
@@ -111,8 +98,8 @@ export default class Standings {
 
       let teamName;
       for (let shortName of this.shortNames) {
-        if (shortName[0] == standing.team.id) {
-          teamName = shortName[1];
+        if (shortName.id == standing.team.id) {
+          teamName = shortName.shortName;
         }
       }
       let tr = document.createElement("tr");

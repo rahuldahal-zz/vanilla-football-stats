@@ -1,5 +1,5 @@
 import PreLoader from "./utils/preloader";
-import Standings from "./standingsHandler";
+import Matches from "./matchesHandler";
 import Navigation from "./navigation";
 import Router from "./utils/router";
 
@@ -38,6 +38,7 @@ export default class LandingPage {
 
     // start to fetch things
     new Navigation(leagueId);
-    new Standings(leagueId).init();
+    // new Standings(leagueId).init();
+    new Matches(leagueId);
   }
 }

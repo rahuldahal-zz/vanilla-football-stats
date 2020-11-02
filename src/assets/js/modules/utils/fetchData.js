@@ -1,30 +1,30 @@
-const offlineEndpoints = (leagueId) => {
+const offlineEndpoints = (id) => {
   return {
-    leagueDetails: `http://localhost:3000/backupData/${leagueId}.json`,
-    standings: `http://localhost:3000/backupData/${leagueId}Standings.json`,
-    teams: `http://localhost:3000/backupData/${leagueId}Teams.json`,
-    scorers: `http://localhost:3000/backupData/${leagueId}Scorers.json`,
+    leagueDetails: `http://localhost:3000/backupData/${id}.json`,
+    standings: `http://localhost:3000/backupData/${id}Standings.json`,
+    teams: `http://localhost:3000/backupData/${id}Teams.json`,
+    scorers: `http://localhost:3000/backupData/${id}Scorers.json`,
     particularTeam: `http://localhost:3000/backupData/athletiMadrid.json`,
-    matches: "",
+    matches: `http://localhost:3000/backupData/${id}UpcomingMatches.json`,
   };
 };
 
-const onlineEndpoints = (leagueId) => {
+const onlineEndpoints = (id) => {
   return {
-    leagueDetails: `https://api.football-data.org/v2/competitions/${leagueId}`,
-    standings: `https://api.football-data.org/v2/competitions/${leagueId}/standings`,
-    teams: `https://api.football-data.org/v2/competitions/${leagueId}/teams`,
-    particularTeam: `https://api.football-data.org/v2/teams/${leagueId}`,
-    scorers: `https://api.football-data.org/v2/competitions/${leagueId}/scorers`,
-    matches: `https://api.football-data.org/v2/teams/${leagueId}/matches/`,
+    leagueDetails: `https://api.football-data.org/v2/competitions/${id}`,
+    standings: `https://api.football-data.org/v2/competitions/${id}/standings`,
+    teams: `https://api.football-data.org/v2/competitions/${id}/teams`,
+    particularTeam: `https://api.football-data.org/v2/teams/${id}`,
+    scorers: `https://api.football-data.org/v2/competitions/${id}/scorers`,
+    matches: `https://api.football-data.org/v2/competitions/2021/matches/`,
   };
 };
 
-export function fetchData(dataToBeFetched, leagueId) {
+export function fetchData(dataToBeFetched, id) {
   const { leagueDetails, standings, teams, particularTeam, matches, scorers } =
     process.env.NODE_ENV === "dev"
-      ? offlineEndpoints(leagueId)
-      : onlineEndpoints(leagueId);
+      ? offlineEndpoints(id)
+      : onlineEndpoints(id);
 
   return new Promise((resolve, reject) => {
     let url;

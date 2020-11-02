@@ -3,6 +3,7 @@ import Teams from "./teamsHandler";
 import Standings from "./standingsHandler";
 import Scorers from "./scorersHandler";
 import Router from "./utils/router";
+import Matches from "./matchesHandler";
 
 const leagueIdAndNameMap = {
   2002: "bundesliga",
@@ -115,14 +116,17 @@ export default class Navigation {
   highlightStat(stat, arrayOfStats) {
     const array = this.navigationButtons || arrayOfStats;
     switch (stat) {
-      case "teams":
+      case "matches":
         this.removeClassFromAndAddTo(array, array[0], "active");
         break;
-      case "scorers":
+      case "teams":
         this.removeClassFromAndAddTo(array, array[1], "active");
         break;
-      case "standings":
+      case "scorers":
         this.removeClassFromAndAddTo(array, array[2], "active");
+        break;
+      case "standings":
+        this.removeClassFromAndAddTo(array, array[3], "active");
         break;
     }
   }
@@ -157,7 +161,8 @@ export default class Navigation {
       teamsOutput.innerHTML = "";
 
       // fetch standings
-      new Standings(this.leagueId).init();
+      // new Standings(this.leagueId).init();
+      new Matches(this.leagueId);
       this.highlightOverallFilterInitially();
     }
   }

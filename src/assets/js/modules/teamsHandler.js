@@ -8,12 +8,14 @@ export default class Teams {
     console.log(this.leagueId);
     this.fetchTeams();
     this.standingsOutput = document.getElementById("standingsOutput");
-    this.teamsOutput = document.getElementById("teamsOutput");
     this.scorersOutput = document.getElementById("scorersOutput");
+    this.teamsOutput = document.getElementById("teamsOutput");
+    this.matchesOutput = document.getElementById("matchesOutput");
 
     // hide "standingsOutput" and display "teamsOutput"
     this.standingsOutput.style.display = "none";
     this.scorersOutput.style.display = "none";
+    this.matchesOutput.style.display = "none";
     this.teamsOutput.style.display = "grid";
   }
 
