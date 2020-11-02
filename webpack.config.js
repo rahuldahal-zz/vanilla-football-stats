@@ -44,11 +44,7 @@ let config = {
   module: {
     rules: [cssConfig, ejsLoader],
   },
-  plugins: [new HtmlWebPackPlugin({
-    filename: 'index.html',
-    template: './src/template/index.template.ejs',
-    devServer: "http://localhost:5000"
-  })],
+  plugins: [],
   output: {
     publicPath: "/"
   }
@@ -59,7 +55,11 @@ if (currentTask === "dev") {
   cssConfig.use.unshift("style-loader");
 
   config.mode = "development";
-  config.plugins.push(new Dotenv());
+  config.plugins.push(new Dotenv(), new HtmlWebPackPlugin({
+    filename: 'index.html',
+    template: './src/template/index.template.ejs',
+    devServer: "http://localhost:5000"
+  }));
   // config.watch = true;
   config.output = {...config.output,
     filename: "bundled.js",
@@ -80,6 +80,10 @@ if (currentTask === "build") {
     splitChunks: { chunks: "all" },
   }; //separates vendors and custom scripts
   config.plugins.push(
+    new HtmlWebPackPlugin({
+      filename: 'index.html',
+      template: './src/template/index.template.ejs',
+    }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: "styles-[chunkhash].css",

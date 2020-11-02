@@ -9,22 +9,23 @@ const offlineEndpoints = (id) => {
   };
 };
 
-const onlineEndpoints = (id) => {
+const onlineEndpoints = (id, params) => {
   return {
     leagueDetails: `https://api.football-data.org/v2/competitions/${id}`,
     standings: `https://api.football-data.org/v2/competitions/${id}/standings`,
     teams: `https://api.football-data.org/v2/competitions/${id}/teams`,
     particularTeam: `https://api.football-data.org/v2/teams/${id}`,
     scorers: `https://api.football-data.org/v2/competitions/${id}/scorers`,
-    matches: `https://api.football-data.org/v2/competitions/2021/matches/`,
+    matches: `https://api.football-data.org/v2/competitions/2021/matches/?${params}`,
   };
 };
 
-export function fetchData(dataToBeFetched, id) {
+export function fetchData(dataToBeFetched, id, params) {
+  params = new URLSearchParams(params).toString();
   const { leagueDetails, standings, teams, particularTeam, matches, scorers } =
     process.env.NODE_ENV === "dev"
       ? offlineEndpoints(id)
-      : onlineEndpoints(id);
+      : onlineEndpoints(id, params);
 
   return new Promise((resolve, reject) => {
     let url;

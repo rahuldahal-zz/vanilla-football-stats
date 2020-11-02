@@ -1,4 +1,3 @@
-import { identity } from "lodash";
 import { fetchData } from "./fetchData";
 
 export default class LocalStorage {
@@ -7,7 +6,6 @@ export default class LocalStorage {
       this.key = `${leagueId} ${season}`;
       let shortNames = localStorage.getItem(this.key);
       if (!shortNames) {
-        localStorage.clear();
         fetchData("teams", leagueId)
           .then((data) => {
             this.setShortNamesToLocalStorage(data.teams);

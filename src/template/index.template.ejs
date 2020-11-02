@@ -11,12 +11,12 @@
 <body>
     <%- include ./body.ejs%>
 
+    <% if (htmlWebpackPlugin.options.devServer) { %>
+    <script src="<%= htmlWebpackPlugin.options.devServer%>/bundled.js"></script>
+    <% }else{ %>
     <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
     <script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
     <% } %>
-
-    <% if (htmlWebpackPlugin.options.devServer) { %>
-    <script src="<%= htmlWebpackPlugin.options.devServer%>/bundled.js"></script>
     <% } %>
 </body>
 

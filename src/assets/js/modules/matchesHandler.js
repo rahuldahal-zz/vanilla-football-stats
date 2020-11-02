@@ -37,15 +37,16 @@ export default class Matches{
 
   fetchShortNames(){
     fetchData(null, this.leagueId)
-    .then((leagueDetails) =>
-      LocalStorage.prototype.isTeamNamesOnLocalStorage(
+    .then((leagueDetails) =>{
+      this.matchDay = leagueDetails.currentSeason.currentMatchday;
+      return LocalStorage.prototype.isTeamNamesOnLocalStorage(
         this.leagueId,
         leagueDetails.currentSeason.startDate
-      )
-    )
+      );
+    })
     .then((response) => {
       this.shortNames = response;
-      this.fetchMatches();
+      this.fetchUpcomingMatches();
     })
     .catch((err) => {
       console.error(err);
@@ -53,12 +54,41 @@ export default class Matches{
     });
   }
 
-  fetchMatches(){
-      fetchData("matches", this.leagueId)
+  fetchUpcomingMatches(){
+      fetchData("matches", this.leagueId, {matchday: this.matchDay+1})
       .then(data=>{
           PreLoader.prototype.hideLoader();
-          console.log(data);
+          this.matches = data.matches;
+          this.populateMatches();
       })
       .catch(err=>console.log(err))
+  }
+
+  populateMatches(){
+    this.matchesOutput.scrollTop = 0;
+    const matchesWrap = this.matchesOutput.firstElementChild;
+    matchesWrap.innerHTML = "";
+    for(let match of this.matches){
+      let {homeTeam, awayTeam, utcDate} = match;
+      const date = new Date(utcDate);
+      homeTeam = this.shortNames.find(name=>name.id === homeTeam.id);
+      awayTeam = this.shortNames.find(name=>name.id === awayTeam.id);
+      matchesWrap.insertAdjacentHTML("beforeend", `
+        <div class="match">
+          <div class="team">
+            <div class="homeTeam">
+              <img src="${homeTeam.crestUrl}" alt="${homeTeam.shortName} logo">
+              <h3>${homeTeam.shortName}</h3>
+            </div>
+            <strong>v/s</strong>
+            <div class="awayTeam">
+              <img src="${awayTeam.crestUrl}" alt="${awayTeam.shortName} logo">
+              <h3>${awayTeam.shortName}</h3>
+            </div>
+          </div>
+          <small class="date">${date.toLocaleString()}</small>
+        </div>
+      `)
+    }
   }
 }

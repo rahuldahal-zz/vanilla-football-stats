@@ -24,7 +24,6 @@ header {
       text-align: center;
       padding-top: 20px;
       cursor: pointer;
-      transform: translateY(-80px);
       transition: transform 0.5s 0.5s cubic-bezier(0.75, -0.5, 0, 1.75);
       border-bottom-right-radius: 1rem;
       box-shadow: 0 9px 18px -10px rgba(0, 0, 0, 0.4);
@@ -107,6 +106,8 @@ header {
     transition: background-color 0.2s ease-in-out;
     background-color: #333;
     width: 100%;
+    padding: 0.5rem;
+    font-size: 0.9rem;
     border-right: 2px solid #666;
 
     &:last-child {
@@ -121,7 +122,6 @@ header {
 
   .active {
     background-color: #fff;
-    padding-top: 12px;
     border-top: 4px solid #00ff85;
     color: #333;
   }
