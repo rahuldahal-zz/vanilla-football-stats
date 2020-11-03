@@ -16,7 +16,7 @@ const onlineEndpoints = (id, params) => {
     teams: `https://api.football-data.org/v2/competitions/${id}/teams`,
     particularTeam: `https://api.football-data.org/v2/teams/${id}`,
     scorers: `https://api.football-data.org/v2/competitions/${id}/scorers`,
-    matches: `https://api.football-data.org/v2/competitions/2021/matches/?${params}`,
+    matches: `https://api.football-data.org/v2/competitions/${id}/matches/?${params}`,
   };
 };
 

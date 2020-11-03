@@ -36,6 +36,7 @@ export default class Matches{
   }
 
   fetchShortNames(){
+    console.log(`fetching for ${this.leagueId}`);
     fetchData(null, this.leagueId)
     .then((leagueDetails) =>{
       this.matchDay = leagueDetails.currentSeason.currentMatchday;
