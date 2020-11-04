@@ -4,15 +4,7 @@ import Standings from "./standingsHandler";
 import Scorers from "./scorersHandler";
 import Router from "./utils/router";
 import Matches from "./matchesHandler";
-
-const leagueIdAndNameMap = {
-  2002: "bundesliga",
-  2014: "laliga",
-  2015: "ligueone",
-  2019: "seriea",
-  2021: "premierleague",
-};
-
+import LeagueDetails from "./utils/leagueDetails";
 let hasBeenCalledOnce = false;
 
 export default class Navigation {
@@ -26,6 +18,12 @@ export default class Navigation {
       this.routesForDropdownLeagues();
       this.routesForNavigationButtons();
     }
+  }
+
+  static changeTheme(leagueId, LeagueDetails){
+    const root = document.documentElement;
+    root.style.setProperty("--leagueTheme", LeagueDetails.prototype.getHexColor(leagueId));
+    root.style.setProperty("--leagueThemeRGB", LeagueDetails.prototype.getRGBColor(leagueId));
   }
 
   selectDOMElements() {
@@ -46,7 +44,7 @@ export default class Navigation {
     this.navigationButtons.forEach((stat) => {
       new Router({
         link: stat,
-        path: `/${leagueIdAndNameMap[this.leagueId]}/${stat.getAttribute(
+        path: `/${LeagueDetails.prototype.getName(this.leagueId)}/${stat.getAttribute(
           "id"
         )}`,
         callback: () => this.navMenuCallback(stat),
@@ -162,6 +160,7 @@ export default class Navigation {
 
       // fetch standings
       // new Standings(this.leagueId).init();
+      this.constructor.changeTheme(this.leagueId, LeagueDetails);
       new Matches(this.leagueId);
       this.highlightOverallFilterInitially();
     }

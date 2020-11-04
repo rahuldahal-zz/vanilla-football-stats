@@ -1,6 +1,6 @@
 #teamInfoCard {
   position: fixed;
-  z-index: 3;
+  z-index: 5;
   top: 0;
   left: 0;
   height: 100vh;
@@ -54,7 +54,7 @@
 
   h4 {
     margin-bottom: 5px;
-    color: $brand;
+    color: var(--brand);
   }
 
   #clubName {
@@ -91,7 +91,7 @@
     h2 {
       width: max-content;
       padding: 10px 20px;
-      background-color: $brand;
+      background-color: var(--brand);
       color: #fff;
       position: relative;
 
@@ -127,7 +127,7 @@
         margin-top: 40px;
         padding: 10px;
         background-color: #eee;
-        border-left: 2px solid $brand;
+        border-left: 2px solid var(--brand);
 
         @include for_600 {
           padding: 0;
@@ -152,7 +152,7 @@
           padding: 10px;
           padding-top: 25px;
           height: max-content;
-          border-bottom: 2px solid $brand;
+          border-bottom: 2px solid var(--brand);
 
           h5 {
             position: absolute;
@@ -160,7 +160,7 @@
             font-weight: 400;
             left: 0;
             padding: 5px 15px;
-            background-color: $brand;
+            background-color: var(--brand);
             color: #fff;
             border-top-left-radius: 1em;
             border-top-right-radius: 1em;
@@ -240,7 +240,7 @@
 
   #squad {
     h3 {
-      color: $brand;
+      color: var(--brand);
       margin-bottom: 10px;
     }
     h4 {
@@ -257,7 +257,7 @@
       top: -1rem;
       font-size: 0.6rem;
       padding: 5px;
-      background-color: $black;
+      background-color: var(--black);
       color: #fff;
       right: 0;
     }
@@ -266,11 +266,11 @@
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       grid-gap: 20px;
       padding: 20px;
-      border-bottom: 1px solid $brand;
+      border-bottom: 1px solid var(--brand);
       margin-bottom: 20px;
 
       .player {
-        background-color: $lightWhite;
+        background-color: var(--lightWhite);
         padding: 10px 15px;
         padding-top: 20px;
         position: relative;

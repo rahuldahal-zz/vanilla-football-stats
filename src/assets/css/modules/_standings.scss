@@ -1,4 +1,6 @@
 #standingsOutput {
+  position: relative;
+  z-index: 2;
   max-width: 1366px;
   margin: 15vh auto;
   display: none;
@@ -60,24 +62,12 @@
     font-weight: 600;
   }
 
-  td > img {
-    height: 20px;
-    max-width: 20px;
-    display: inline-block;
-    margin-right: 10px;
-
-    @include for_600 {
-      display: block;
-      margin: auto;
-    }
-  }
-
   tr:nth-child(even) {
     background-color: #fff;
     color: #333;
 
     td:nth-child(10) {
-      background-color: #00ff85;
+      background-color: var(--leagueTheme);
       text-align: center;
     }
   }
@@ -86,8 +76,25 @@
     color: #333;
 
     td:nth-child(10) {
-      background-color: #1ab66b;
+      background-color: rgba(var(--leagueThemeRGB), 0.7);
       text-align: center;
+    }
+  }
+
+  td {
+    &:last-child {
+      color: var(--leagueThemeText);
+    }
+    img {
+      height: 20px;
+      max-width: 20px;
+      display: inline-block;
+      margin-right: 10px;
+
+      @include for_600 {
+        display: block;
+        margin: auto;
+      }
     }
   }
 
@@ -111,7 +118,7 @@
 
         &:hover,
         &:focus {
-          background-color: $accent;
+          background-color: var(--leagueTheme);
         }
 
         &:last-child {
@@ -122,6 +129,7 @@
     }
   }
   .activeFilter {
-    background-color: $accent;
+    background-color: var(--leagueTheme);
+    color: var(--leagueThemeText);
   }
 }

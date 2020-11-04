@@ -2,6 +2,7 @@ import PreLoader from "./utils/preloader";
 import Matches from "./matchesHandler";
 import Navigation from "./navigation";
 import Router from "./utils/router";
+import LeagueDetails from "./utils/leagueDetails";
 
 export default class LandingPage {
   constructor() {
@@ -38,6 +39,7 @@ export default class LandingPage {
 
     // start to fetch things
     new Navigation(leagueId);
+    Navigation.changeTheme(leagueId, LeagueDetails);
     // new Standings(leagueId).init();
     new Matches(leagueId);
   }

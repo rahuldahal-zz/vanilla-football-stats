@@ -2,6 +2,8 @@
   display: none;
   margin-top: 7vh;
   min-height: 93vh;
+  position: relative;
+  z-index: 2;
 
   .scorersWrap {
     display: flex;
