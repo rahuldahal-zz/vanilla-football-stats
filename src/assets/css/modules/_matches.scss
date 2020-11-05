@@ -7,6 +7,16 @@
   justify-content: center;
   align-items: center;
 
+  .clearLocalStorage {
+    color: #f4f4f4;
+
+    button {
+      display: block;
+      margin: auto;
+      margin-top: 1rem;
+    }
+  }
+
   .matchesWrap {
     display: flex;
     flex-wrap: wrap;
@@ -14,6 +24,7 @@
     align-items: center;
     margin-top: 10vh;
     padding-bottom: 10vh;
+    min-height: 100%;
 
     .match {
       display: flex;
