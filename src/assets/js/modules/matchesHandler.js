@@ -66,7 +66,6 @@ export default class Matches{
       .then(data=>{
           PreLoader.prototype.hideLoader();
           this.matches = data.matches;
-          throw new Error();
           this.populateMatches();
       })
       .catch(err=>console.log(err))
