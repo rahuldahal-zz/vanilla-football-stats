@@ -11,6 +11,7 @@ export default class Matches{
     this.leagueId = leagueId;
     this.fetchShortNames();
     this.selectDOMElements();
+    this.events();
     new Navigation().highlightStat(
         "matches",
         document.querySelectorAll("#navigation>button")
@@ -19,6 +20,10 @@ export default class Matches{
 
   // events
   events() {
+    this.clearStorage.addEventListener("click", ()=>{
+      localStorage.clear();
+      location.reload();
+    })
   }
 
   // methods
@@ -28,6 +33,7 @@ export default class Matches{
     this.scorersOutput = document.getElementById("scorersOutput");
     this.teamsOutput = document.getElementById("teamsOutput");
     this.matchesOutput = document.getElementById("matchesOutput");
+    this.clearStorage = document.getElementById("clearStorage");
 
     this.standingsOutput.style.display = "none";
     this.matchesOutput.style.display = "flex";
