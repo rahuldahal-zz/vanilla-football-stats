@@ -109,6 +109,7 @@ export default class Navigation {
       if (this.statValue === "standings") new Standings(this.leagueId).init();
       else if (this.statValue === "scorers") new Scorers(this.leagueId);
       else if (this.statValue === "teams") new Teams(this.leagueId);
+      else if (this.statValue === "matches") new Matches(this.leagueId);
     }
   }
 

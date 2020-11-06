@@ -37,8 +37,10 @@ export default class Scorers {
     const scorersWrap = this.scorersOutput.firstElementChild;
     scorersWrap.innerHTML = "";
     const { scorers } = this.data;
+    const shortNames = JSON.parse(localStorage.getItem(`${this.leagueId} ${this.data.season.startDate}`));
     scorers.map((scorer) => {
       const { name, nationality, position, dateOfBirth } = scorer.player;
+      const team = shortNames.find(name=>name.id === scorer.team.id);
       scorersWrap.insertAdjacentHTML(
         "beforeend",
         `
@@ -46,6 +48,10 @@ export default class Scorers {
               <h2 class="name">${name}</h2>
               <p class="position"><i class="fas fa-users"></i>${position}</p>
               <p class="country"><i class="fas fa-flag"></i>${nationality}</p>
+              <div class="team">
+                <img src="${team.crestUrl}" alt="${team.shortName} logo">
+                <p class="teamName">${team.shortName}</p>
+              </div>
               <span class="age">${
                 new Date().getFullYear() - new Date(dateOfBirth).getFullYear()
               } yrs</span>

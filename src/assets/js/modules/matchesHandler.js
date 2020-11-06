@@ -62,7 +62,7 @@ export default class Matches{
   }
 
   fetchUpcomingMatches(){
-      fetchData("matches", this.leagueId, {matchday: this.matchDay+1})
+      fetchData("matches", this.leagueId, {matchday: this.matchDay})
       .then(data=>{
           PreLoader.prototype.hideLoader();
           this.matches = data.matches;
