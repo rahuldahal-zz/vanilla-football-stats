@@ -24,6 +24,7 @@ export default class Navigation {
     const root = document.documentElement;
     root.style.setProperty("--leagueTheme", LeagueDetails.prototype.getHexColor(leagueId));
     root.style.setProperty("--leagueThemeRGB", LeagueDetails.prototype.getRGBColor(leagueId));
+    root.style.setProperty("--leagueAccent", LeagueDetails.prototype.getAccentColor(leagueId));
   }
 
   selectDOMElements() {
@@ -150,8 +151,6 @@ export default class Navigation {
       selectedLeague.textContent = league.textContent;
 
       // ends
-
-      selected.style.transform = "translateY(-80px)";
 
       // to highlight "standings" initially on every selection
       this.highlightStat("standings");

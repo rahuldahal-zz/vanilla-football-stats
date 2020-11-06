@@ -27,15 +27,18 @@
     min-height: 100%;
 
     .match {
+      position: relative;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background-color: #333;
-      color: #f4f4f4;
+      background-color: #f4f4f4;
+      color: #333;
       padding: 1rem;
+      padding-bottom: 2rem;
       margin: 2rem;
-      width: 300px;
+      min-width: 300px;
+      min-height: 125px;
       border-radius: 0.5rem;
 
       @include for_600 {
@@ -47,7 +50,6 @@
         width: 100%;
         justify-content: space-between;
         align-items: baseline;
-        overflow-x: scroll;
 
         h3 {
           text-align: center;
@@ -65,7 +67,13 @@
       }
 
       .date {
-        margin-top: 1.5rem;
+        position: absolute;
+        right: -1rem;
+        bottom: -1rem;
+        padding: 1em 1.25em;
+        border-radius: 0.5rem;
+        background-color: var(--leagueAccent);
+        box-shadow: -6px -6px 12px rgba(0, 0, 0, 0.1);
       }
     }
   }

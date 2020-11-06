@@ -55,6 +55,7 @@ export default class Standings {
   }
 
   populateStandings(type) {
+    this.standingsOutput.scrollTop = 0;
     this.data = this.data || JSON.parse(localStorage.getItem("standings"));
 
     // hide teams, show standings

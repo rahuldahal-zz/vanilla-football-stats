@@ -107,9 +107,14 @@ header {
     transition: background-color 0.2s ease-in-out;
     background-color: #333;
     width: 100%;
-    padding: 0.2rem;
-    font-size: 0.8rem;
+    padding: 0.5rem;
+    font-size: 0.9rem;
     border-right: 2px solid #666;
+
+    @include for_768 {
+      padding: 0.2rem;
+      font-size: 0.8rem;
+    }
 
     &:last-child {
       border-right: none;

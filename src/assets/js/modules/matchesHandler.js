@@ -20,7 +20,7 @@ export default class Matches{
 
   // events
   events() {
-    this.clearStorage.addEventListener("click", ()=>{
+    this.clearStorage && this.clearStorage.addEventListener("click", ()=>{
       localStorage.clear();
       location.reload();
     })

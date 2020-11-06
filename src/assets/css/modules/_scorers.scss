@@ -1,6 +1,8 @@
 #scorersOutput {
   display: none;
   margin-top: 7vh;
+  padding-top: 7vh;
+  padding-bottom: 7vh;
   min-height: 93vh;
   position: relative;
   z-index: 2;
@@ -13,15 +15,41 @@
     justify-content: space-around;
     flex-wrap: wrap;
 
+    .fas {
+      margin-right: 1rem;
+    }
+
     .scorer {
+      position: relative;
       background-color: #f4f4f4;
       margin: 1.25em;
       padding: 1em;
-      min-width: 15.625rem;
+      min-width: 300px;
+      min-height: 170px;
       border-radius: 0.5em;
       display: flex;
       flex-direction: column;
       text-align: center;
+
+      .goals {
+        position: absolute;
+        right: -1rem;
+        bottom: -1rem;
+        background-color: var(--leagueAccent);
+        padding: 1rem 1.25rem;
+        border-radius: 0.5rem;
+        box-shadow: -6px -6px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .age {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        padding: 1rem;
+        border-top-right-radius: 0.5rem;
+        background-color: var(--leagueTheme);
+        color: var(--leagueThemeText);
+      }
     }
   }
 }

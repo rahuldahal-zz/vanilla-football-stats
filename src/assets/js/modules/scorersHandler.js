@@ -43,13 +43,13 @@ export default class Scorers {
         "beforeend",
         `
             <div class="scorer">
-            <h2 class="goals">${scorer.numberOfGoals} Goals</h2> 
-                <h4 class="name">${name}</h4>
-                <p class="position">${position}</p>
-                <p class="country">${nationality}</p>
-                <span class="age">${
-                  new Date().getFullYear() - new Date(dateOfBirth).getFullYear()
-                } yrs</span>
+              <h2 class="name">${name}</h2>
+              <p class="position"><i class="fas fa-users"></i>${position}</p>
+              <p class="country"><i class="fas fa-flag"></i>${nationality}</p>
+              <span class="age">${
+                new Date().getFullYear() - new Date(dateOfBirth).getFullYear()
+              } yrs</span>
+              <h1 class="goals">${scorer.numberOfGoals} Goals</h1> 
             </div>
     `
       );
